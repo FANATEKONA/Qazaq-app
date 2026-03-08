@@ -1,1 +1,86 @@
-<p>user-profile works!</p>
+<div class="profile-layout">
+
+  <aside class="profile-sidebar">
+    <div class="user-card">
+      <div class="avatar">{{ user.avatar }}</div>
+      <h2 class="user-name">{{ user.name }}</h2>
+      <p class="user-role">{{ user.role }}</p>
+
+      <div class="user-badges">
+        <div class="badge-item">
+          <span class="badge-icon">🎯</span>
+          <div class="badge-info">
+            <span class="badge-value">Уровень {{ user.currentLevel }}</span>
+            <span class="badge-label">Текущая цель</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">🔥</span>
+          <div class="badge-info">
+            <span class="badge-value">{{ user.streak }} дней</span>
+            <span class="badge-label">Ударный режим</span>
+          </div>
+        </div>
+        <div class="badge-item">
+          <span class="badge-icon">⭐</span>
+          <div class="badge-info">
+            <span class="badge-value">{{ user.totalPoints }}</span>
+            <span class="badge-label">Очков опыта</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn primary full-width" [routerLink]="['/levels']">Продолжить обучение</button>
+    </div>
+  </aside>
+
+  <main class="profile-content">
+
+    <div class="content-card">
+      <div class="card-header">
+        <h3>Прогресс модуля {{ user.currentLevel }}</h3>
+      </div>
+
+      <div class="stats-grid">
+        @for (stat of stats; track stat.label) {
+          <div class="stat-item">
+            <div class="stat-header">
+              <span class="stat-label">{{ stat.label }}</span>
+              <span class="stat-numbers">{{ stat.value }} / {{ stat.total }}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill"
+                   [style.width.%]="getPercent(stat.value, stat.total)"
+                   [style.background-color]="stat.color">
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="card-header">
+        <h3>Достижения</h3>
+      </div>
+
+      <div class="achievements-grid">
+        @for (ach of achievements; track ach.title) {
+          <div class="achievement-card" [class.locked]="!ach.unlocked">
+            <div class="ach-icon">{{ ach.icon }}</div>
+            <div class="ach-info">
+              <h4>{{ ach.title }}</h4>
+              <p>{{ ach.desc }}</p>
+            </div>
+            @if (ach.unlocked) {
+              <div class="ach-status">✅</div>
+            } @else {
+              <div class="ach-status locked-icon">🔒</div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+  </main>
+</div>

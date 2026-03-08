@@ -26,11 +26,14 @@
       <h3>Как это работает:</h3>
       <p>{{ currentTopic.rule }}</p>
 
-      <div class="example-box">
-        <strong>Пример:</strong>
-        <p>Кітап (книга) + <strong>тар</strong> = Кітаптар (книги)</p>
-        <p>Дәптер (тетрадь) + <strong>лер</strong> = Дәптерлер (тетради)</p>
-      </div>
+      @if (currentTopic.examples && currentTopic.examples.length > 0) {
+        <div class="example-box">
+          <strong>Примеры:</strong>
+          @for (ex of currentTopic.examples; track $index) {
+            <p [innerHTML]="ex"></p>
+          }
+        </div>
+      }
     </div>
 
     <div class="practice-box">
@@ -45,7 +48,11 @@
             <p><strong>Задание:</strong> Вставьте правильное окончание.</p>
             <div class="input-group">
               <span>{{ currentTopic.exercise.word }} + </span>
-              <input type="text" placeholder="ваш ответ..." class="exercise-input" [(ngModel)]="userAnswer" (keyup.enter)="checkAnswer()">
+              <input type="text"
+                     placeholder="ваш ответ..."
+                     class="exercise-input"
+                     [(ngModel)]="userAnswer"
+                     (keyup.enter)="checkAnswer()">
             </div>
 
             @if (isChecked) {

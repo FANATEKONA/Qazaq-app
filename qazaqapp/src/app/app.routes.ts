@@ -7,7 +7,7 @@ import {Shadowing} from './pages/shadowing/shadowing';
 import {Grammar} from './pages/grammar/grammar';
 import {FourSkills} from './pages/four-skills/four-skills';
 import {ModuleTest} from './pages/module-test/module-test';
-import {UserProfile} from './pages/user-profile/user-profile';
+import { UserProfile } from './pages/user-profile/user-profile';
 import {authGuard} from './core/guards/auth-guard';
 import {LevelDashboard} from './pages/level-dashboard/level-dashboard';
 
@@ -23,6 +23,6 @@ export const routes: Routes = [
   { path: 'levels/:levelId/grammar/:topicId', component: Grammar },
   { path: 'levels/:levelId/skills/:skillType', component: FourSkills },
   { path: 'levels/:levelId/test', component: ModuleTest },
-  { path: 'profile', component: UserProfile, canActivate: [authGuard] },
+  { path: 'profile', component: UserProfile , canActivate: [authGuard] },
   { path: '**', redirectTo: '/home' }
 ];
