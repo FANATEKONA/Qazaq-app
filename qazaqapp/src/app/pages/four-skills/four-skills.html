@@ -1,0 +1,83 @@
+<div class="lesson-layout">
+
+  <aside class="sidebar">
+    <button class="back-btn" [routerLink]="['/levels', levelId]">← Назад к модулю</button>
+    <h3>Навыки</h3>
+    <ul class="lesson-list">
+      <li>
+        <a [routerLink]="['/levels', levelId, 'skills', 'reading']" routerLinkActive="active" class="lesson-link">
+          <span class="lesson-title">📖 Чтение</span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/levels', levelId, 'skills', 'listening']" routerLinkActive="active" class="lesson-link">
+          <span class="lesson-title">🎧 Аудирование</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="content-area">
+
+    <div class="skill-header">
+      <span class="badge" [class.reading-badge]="skillType === 'reading'" [class.listening-badge]="skillType === 'listening'">
+        {{ skillType === 'reading' ? 'Чтение' : 'Аудирование' }}
+      </span>
+      <h2>{{ content.title }}</h2>
+    </div>
+
+    @if (skillType === 'reading') {
+      <div class="reading-box">
+        <p class="reading-text">{{ content.text }}</p>
+      </div>
+    }
+
+    @if (skillType === 'listening') {
+      <div class="audio-box">
+        <p class="instruction">Прослушайте аудиозапись и ответьте на вопросы ниже.</p>
+        <div class="audio-player">
+          <button class="play-btn" (click)="playAudio()">{{ isAudioPlaying ? '⏸' : '▶' }}</button>
+          <div class="progress-track">
+            <div class="progress-fill" [class.playing]="isAudioPlaying"></div>
+          </div>
+        </div>
+
+        <button class="toggle-transcript-btn" (click)="toggleTranscript()">
+          {{ showTranscript ? 'Скрыть текст' : 'Показать текст (Субтитры)' }}
+        </button>
+
+        @if (showTranscript) {
+          <div class="transcript-box">
+            <p>{{ content.transcript }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="quiz-section">
+      <h3>Проверьте понимание:</h3>
+
+      <div class="questions-list">
+        @for (q of content.questions; track $index; let qIndex = $index) {
+          <div class="question-card">
+            <p class="question-text">{{ q.q }}</p>
+
+            <div class="options-grid">
+              @for (opt of q.options; track $index; let optIndex = $index) {
+                <button class="option-btn"
+                        [class.selected]="q.selected === optIndex"
+                        [class.correct]="q.selected !== null && optIndex === q.correct"
+                        [class.wrong]="q.selected !== null && q.selected === optIndex && optIndex !== q.correct"
+                        [disabled]="q.selected !== null"
+                        (click)="selectAnswer(qIndex, optIndex)">
+                  {{ opt }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  </main>
+</div>

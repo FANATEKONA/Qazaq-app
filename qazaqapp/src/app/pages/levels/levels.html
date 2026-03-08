@@ -1,0 +1,12 @@
+<div class="levels-container">
+  <h2>Выберите ваш уровень</h2>
+
+  <div class="levels-grid">
+    @for (level of levelsList; track level.id) {
+      <div class="level-card" [routerLink]="['/levels', level.id]">
+        <h3>{{ level.name }}</h3>
+        <p>{{ level.desc }}</p>
+      </div>
+    }
+  </div>
+</div>

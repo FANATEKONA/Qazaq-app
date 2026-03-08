@@ -1,0 +1,115 @@
+.lesson-layout {
+  display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; align-items: flex-start;
+}
+
+.sidebar {
+  width: 350px; background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); flex-shrink: 0;
+}
+.back-btn { background: none; border: none; color: #7f8c8d; font-size: 1rem; cursor: pointer; padding: 0; margin-bottom: 1.5rem; }
+.back-btn:hover { color: #3498db; }
+.sidebar h3 { margin-top: 0; margin-bottom: 1rem; color: #2c3e50; }
+.lesson-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.lesson-link { display: flex; padding: 1rem; text-decoration: none; color: #2c3e50; background-color: #f8f9fa; border-radius: 8px; transition: all 0.2s; }
+.lesson-link:hover { background-color: #f1f9ff; }
+.lesson-link.active { background-color: #e1f0fa; border-color: #3498db; font-weight: bold; color: #2980b9; }
+
+/* Контент */
+.content-area {
+  flex-grow: 1; display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+.shadowing-header {
+  background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+.badge { background-color: #f39c12; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+.shadowing-header h2 { margin: 1rem 0 0.5rem 0; color: #1a252f; font-size: 2rem; }
+.instruction { color: #7f8c8d; margin: 0; font-size: 1.1rem; }
+
+/* Плеер */
+.audio-box {
+  background: white; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+.audio-player {
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.play-btn {
+  background: #3498db; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;
+}
+.play-btn:hover { background: #2980b9; transform: scale(1.05); }
+
+/* Анимация ползунка */
+.progress-track {
+  flex-grow: 1; height: 8px; background: #ecf0f1; border-radius: 4px; overflow: hidden; position: relative;
+}
+.progress-fill {
+  width: 0%; height: 100%; background: #3498db; transition: width 0.1s linear;
+}
+.progress-fill.playing {
+  animation: play-progress 3s linear forwards;
+}
+@keyframes play-progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.time { color: #7f8c8d; font-weight: bold; }
+
+/* Карточки с текстом */
+.text-boxes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+.text-card {
+  background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+.text-card h3 { margin-top: 0; color: #7f8c8d; font-size: 1rem; text-transform: uppercase; }
+.text-card p { margin: 0; color: #2c3e50; font-size: 1.4rem; font-weight: bold; line-height: 1.4; }
+.translation p { color: #555; font-size: 1.2rem; font-weight: normal; }
+
+/* Блок записи */
+.recording-section {
+  background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); text-align: center; border-top: 4px solid #e74c3c;
+}
+.recording-section h3 { margin-top: 0; color: #2c3e50; }
+
+.record-btn {
+  background: #ecf0f1; color: #2c3e50; border: 2px solid #bdc3c7; padding: 1rem 2rem; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+}
+.record-btn:hover { border-color: #e74c3c; background: #fdf0ed; }
+
+.recording-active {
+  background: #e74c3c; color: white; border-color: #c0392b; animation: pulse-shadow 1.5s infinite;
+}
+.recording-active:hover { background: #c0392b; }
+
+.recording-status {
+  margin-top: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; color: #e74c3c; font-weight: bold;
+}
+.pulse-dot {
+  width: 12px; height: 12px; background: #e74c3c; border-radius: 50%; animation: blink 1s infinite;
+}
+
+/* Результат проверки */
+.recognition-result {
+  margin-top: 2rem; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e0e0e0; text-align: left; animation: fadeIn 0.5s ease;
+}
+.recognition-result p { margin-top: 0; color: #2c3e50; font-size: 1.1rem; }
+
+.feedback {
+  margin-top: 1rem; padding: 1rem; border-radius: 6px; font-weight: bold; text-align: center;
+}
+.success { background-color: #e8f8f5; color: #27ae60; border: 1px solid #a3e4d7; }
+.error { background-color: #fdedec; color: #c0392b; border: 1px solid #f5b7b1; }
+
+@keyframes pulse-shadow {
+  0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

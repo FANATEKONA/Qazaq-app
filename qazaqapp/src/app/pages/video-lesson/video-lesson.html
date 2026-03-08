@@ -1,0 +1,38 @@
+<div class="lesson-layout">
+
+  <aside class="sidebar">
+    <button class="back-btn" [routerLink]="['/levels', levelId]">← Назад к модулю</button>
+    <h3>Список видеоуроков</h3>
+    <ul class="lesson-list">
+      @for (lesson of lessons; track lesson.id) {
+        <li>
+          <a [routerLink]="['/levels', levelId, 'video', lesson.id]"
+             routerLinkActive="active"
+             class="lesson-link">
+            <span class="lesson-title">{{ lesson.title }}</span>
+            <span class="lesson-time">{{ lesson.duration }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <main class="content-area">
+    <h2>{{ currentLesson.title }}</h2>
+
+    <div class="video-container">
+      <iframe
+        [src]="getSafeUrl(currentLesson.youtubeId)"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="lesson-details">
+      <h3>Описание урока</h3>
+      <p>В этом уроке мы подробно разберем тему "{{ currentLesson.title }}". Обязательно законспектируйте основные правила и повторите произношение за диктором.</p>
+    </div>
+  </main>
+
+</div>

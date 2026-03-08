@@ -1,0 +1,126 @@
+.lesson-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* Боковое меню */
+.sidebar {
+  width: 350px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #7f8c8d;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.back-btn:hover {
+  color: #3498db;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lesson-link {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  text-decoration: none;
+  color: #2c3e50;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.lesson-link:hover {
+  background-color: #f1f9ff;
+}
+
+/* Активный выбранный урок */
+.lesson-link.active {
+  background-color: #e1f0fa;
+  border-color: #3498db;
+  font-weight: bold;
+  color: #2980b9;
+}
+
+.lesson-time {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+/* Основной контент */
+.content-area {
+  flex-grow: 1;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.content-area h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}.video-container {
+   position: relative;
+   width: 100%;
+   padding-bottom: 56.25%; /* Соотношение 16:9 */
+   height: 0;
+   border-radius: 12px;
+   overflow: hidden;
+   background: #000;
+ }
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-placeholder {
+  text-align: center;
+  color: white;
+}
+
+.play-icon {
+  font-size: 4rem;
+  color: #3498db;
+  cursor: pointer;
+}
+
+.lesson-details h3 {
+  color: #2c3e50;
+}
+
+.lesson-details p {
+  color: #555;
+  line-height: 1.6;
+}

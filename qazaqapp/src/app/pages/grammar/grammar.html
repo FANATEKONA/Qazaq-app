@@ -1,0 +1,75 @@
+<div class="lesson-layout">
+
+  <aside class="sidebar">
+    <button class="back-btn" [routerLink]="['/levels', levelId]">← Назад к модулю</button>
+    <h3>Темы по грамматике</h3>
+    <ul class="lesson-list">
+      @for (topic of topics; track topic.id) {
+        <li>
+          <a [routerLink]="['/levels', levelId, 'grammar', topic.id]"
+             routerLinkActive="active"
+             class="lesson-link">
+            <span class="lesson-title">{{ topic.title }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <main class="content-area">
+    <div class="grammar-header">
+      <span class="badge">Правило</span>
+      <h2>{{ currentTopic.title }}</h2>
+    </div>
+
+    <div class="rule-box">
+      <h3>Как это работает:</h3>
+      <p>{{ currentTopic.rule }}</p>
+
+      <div class="example-box">
+        <strong>Пример:</strong>
+        <p>Кітап (книга) + <strong>тар</strong> = Кітаптар (книги)</p>
+        <p>Дәптер (тетрадь) + <strong>лер</strong> = Дәптерлер (тетради)</p>
+      </div>
+    </div>
+
+    <div class="practice-box">
+      <h3>Закрепление на практике</h3>
+      <p>Здесь будут интерактивные упражнения на тему «{{ currentTopic.title }}».</p>
+
+      @if (!isExerciseActive) {
+        <button class="btn primary" (click)="toggleExercise()">Начать упражнение</button>
+      } @else {
+        <div class="exercise-content">
+          @if (currentTopic.exercise) {
+            <p><strong>Задание:</strong> Вставьте правильное окончание.</p>
+            <div class="input-group">
+              <span>{{ currentTopic.exercise.word }} + </span>
+              <input type="text" placeholder="ваш ответ..." class="exercise-input" [(ngModel)]="userAnswer" (keyup.enter)="checkAnswer()">
+            </div>
+
+            @if (isChecked) {
+              <div class="feedback">
+                @if (isCorrect) {
+                  <p class="success-text">✅ Правильно! Отличная работа.</p>
+                } @else {
+                  <p class="error-text">❌ Ошибка. Попробуй еще раз.</p>
+                }
+              </div>
+            }
+
+            <div class="exercise-actions">
+              <button class="btn primary" (click)="checkAnswer()">Проверить</button>
+              <button class="btn secondary" (click)="toggleExercise()">Скрыть</button>
+            </div>
+
+          } @else {
+            <p>Упражнение для этой темы находится в разработке.</p>
+            <button class="btn secondary" (click)="toggleExercise()">Скрыть</button>
+          }
+        </div>
+      }
+    </div>
+  </main>
+
+</div>

@@ -1,0 +1,29 @@
+<div class="test-container">
+  @if (!isFinished) {
+    <div class="question-card">
+      <div class="progress">Вопрос {{ currentQuestion + 1 }} из {{ questions.length }}</div>
+      <h2 class="question-text">{{ questions[currentQuestion].text }}</h2>
+
+      <div class="options">
+        @for (opt of questions[currentQuestion].options; track $index) {
+          <button class="option-btn" (click)="answer($index)">
+            {{ opt }}
+          </button>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="result-card">
+      <h2>Тест завершен!</h2>
+      <p>Вы ответили правильно на {{ score }} из {{ questions.length }} вопросов.</p>
+
+      <div class="level-result">
+        Ваш рекомендуемый уровень: <strong>{{ recommendedLevel | uppercase }}</strong>
+      </div>
+
+      <button class="btn primary" [routerLink]="['/levels', recommendedLevel]">
+        Перейти к обучению
+      </button>
+    </div>
+  }
+</div>

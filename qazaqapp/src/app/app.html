@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="logo">
+    <a routerLink="/home">QazaqApp</a>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    </li>
+    <li>
+      <a routerLink="/levels" routerLinkActive="active">Levels</a>
+    </li>
+    <li>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+    </li>
+  </ul>
+</nav>
+
+<main class="content">
+  <router-outlet></router-outlet>
+</main>

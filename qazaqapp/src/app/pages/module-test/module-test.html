@@ -1,0 +1,44 @@
+<div class="test-wrapper">
+  <div class="test-card">
+
+    <header class="test-header">
+      <h2>Итоговый тест: Уровень {{ levelId | uppercase }}</h2>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressWidth"></div>
+      </div>
+    </header>
+
+    @if (!isFinished) {
+      <div class="question-body">
+        <span class="step-info">Вопрос {{ currentStep + 1 }} из {{ testQuestions.length }}</span>
+        <h3 class="question-text">{{ testQuestions[currentStep].q }}</h3>
+
+        <div class="options-list">
+          @for (opt of testQuestions[currentStep].options; track $index) {
+            <button class="option-item" (click)="answer($index)">
+              {{ opt }}
+            </button>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="result-body">
+        <div class="result-icon">{{ score > 3 ? '🎉' : '📚' }}</div>
+        <h3>Тест завершен!</h3>
+        <p class="score-text">Ваш результат: <strong>{{ score }} из {{ testQuestions.length }}</strong></p>
+
+        @if (score > 3) {
+          <p class="feedback-msg">Отлично! Вы успешно освоили материалы уровня {{ levelId | uppercase }}.</p>
+        } @else {
+          <p class="feedback-msg">Неплохо, но мы рекомендуем еще раз повторить некоторые уроки.</p>
+        }
+
+        <div class="action-buttons">
+          <button class="btn primary" [routerLink]="['/levels']">К списку уровней</button>
+          <button class="btn secondary" [routerLink]="['/levels', levelId]">Вернуться в модуль</button>
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

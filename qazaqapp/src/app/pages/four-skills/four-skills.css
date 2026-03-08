@@ -1,0 +1,55 @@
+.lesson-layout { display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; align-items: flex-start; }
+
+/* Сайдбар */
+.sidebar { width: 350px; background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); flex-shrink: 0; }
+.back-btn { background: none; border: none; color: #7f8c8d; font-size: 1rem; cursor: pointer; padding: 0; margin-bottom: 1.5rem; }
+.back-btn:hover { color: #3498db; }
+.sidebar h3 { margin-top: 0; margin-bottom: 1rem; color: #2c3e50; }
+.lesson-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.lesson-link { display: flex; padding: 1rem; text-decoration: none; color: #2c3e50; background-color: #f8f9fa; border-radius: 8px; transition: all 0.2s; }
+.lesson-link:hover { background-color: #f1f9ff; }
+.lesson-link.active { background-color: #e1f0fa; border-color: #3498db; font-weight: bold; color: #2980b9; }
+
+/* Контент */
+.content-area { flex-grow: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+
+.skill-header { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+.badge { color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+.reading-badge { background-color: #27ae60; }
+.listening-badge { background-color: #8e44ad; }
+.skill-header h2 { margin: 1rem 0 0; color: #1a252f; font-size: 2rem; }
+
+/* Чтение */
+.reading-box { background: white; padding: 2rem; border-radius: 12px; border-left: 5px solid #27ae60; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+.reading-text { font-size: 1.3rem; line-height: 1.8; color: #2c3e50; margin: 0; }
+
+/* Аудирование */
+.audio-box { background: white; padding: 2rem; border-radius: 12px; border-left: 5px solid #8e44ad; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+.instruction { color: #7f8c8d; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; }
+.audio-player { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.play-btn { background: #8e44ad; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+.play-btn:hover { background: #732d91; transform: scale(1.05); }
+.progress-track { flex-grow: 1; height: 8px; background: #ecf0f1; border-radius: 4px; overflow: hidden; position: relative; }
+.progress-fill { width: 0%; height: 100%; background: #8e44ad; }
+.progress-fill.playing { animation: play-progress 5s linear forwards; }
+@keyframes play-progress { 0% { width: 0%; } 100% { width: 100%; } }
+
+.toggle-transcript-btn { background: none; border: 1px dashed #bdc3c7; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; color: #7f8c8d; font-weight: bold; }
+.toggle-transcript-btn:hover { background: #f8f9fa; border-color: #8e44ad; color: #8e44ad; }
+.transcript-box { margin-top: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; color: #2c3e50; font-size: 1.2rem; line-height: 1.6; }
+
+/* Викторина */
+.quiz-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+.quiz-section h3 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 1rem; }
+.questions-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.question-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border: 1px solid #e0e0e0; }
+.question-text { font-size: 1.1rem; font-weight: bold; color: #2c3e50; margin-top: 0; }
+.options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+
+.option-btn { background: white; border: 2px solid #bdc3c7; padding: 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; color: #2c3e50; }
+.option-btn:hover:not([disabled]) { border-color: #3498db; background: #f1f9ff; }
+.option-btn[disabled] { cursor: not-allowed; opacity: 0.8; }
+
+/* Цвета правильных и неправильных ответов */
+.option-btn.correct { background-color: #27ae60; color: white; border-color: #27ae60; }
+.option-btn.wrong { background-color: #e74c3c; color: white; border-color: #e74c3c; }

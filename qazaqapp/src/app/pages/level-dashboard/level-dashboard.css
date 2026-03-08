@@ -1,0 +1,113 @@
+.dashboard-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.dashboard-header h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  color: #7f8c8d;
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+.modules-grid {
+  display: grid;
+  /* 4 колонки для ПК, на мобильных будут переноситься */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.module-card {
+  background: white;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.module-card h3 {
+  color: #1a252f;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.3rem;
+}
+
+.module-card p {
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.card-btn {
+  background-color: #f1f3f5;
+  color: #2c3e50;
+}
+
+.card-btn:hover {
+  background-color: #e2e6ea;
+}
+
+.test-section {
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  /* Та самая синяя полоска сверху */
+  border-top: 4px solid #3498db;
+}
+
+.test-section h2 {
+  color: #1a252f;
+  margin-top: 0;
+  font-size: 1.8rem;
+}
+
+.test-section p {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.primary:hover {
+  background-color: #2980b9;
+}
+
+.test-btn {
+  max-width: 250px;
+}

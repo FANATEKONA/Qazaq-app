@@ -1,0 +1,50 @@
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  /* Убрали background-color, box-shadow и border-radius */
+}
+
+/* Остальные стили для h1, p, btn оставляем без изменений */
+h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #7f8c8d;
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary {
+  background-color: #3498db;
+  color: white;
+}
+.primary:hover {
+  background-color: #2980b9;
+}
+
+.secondary {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+}
+.secondary:hover {
+  background-color: #bdc3c7;
+}
