@@ -67,28 +67,48 @@ export class Shadowing implements OnInit {
     }
 
     window.speechSynthesis.cancel();
-    this.currentUtterance = new SpeechSynthesisUtterance(this.currentTask.kazakh);
-    this.currentUtterance.lang = 'kk-KZ';
-    this.currentUtterance.rate = 0.9;
+    const utterance = new SpeechSynthesisUtterance(this.currentTask.kazakh);
+    utterance.lang = 'kk-KZ';
+    utterance.rate = 0.9;
 
-    this.currentUtterance.onend = () => {
-      this.zone.run(() => {
-        this.isAudioPlaying = false;
-        this.cdr.detectChanges();
-      });
+    // Функция для поиска и установки казахского голоса
+    const setKzVoice = () => {
+      const voices = window.speechSynthesis.getVoices();
+
+      // Выводим все доступные голоса в консоль (F12), чтобы ты увидел, что нашел браузер
+      console.log('Доступные голоса:', voices.map(v => `${v.name} (${v.lang})`));
+
+      // Ищем сначала "натуральные" голоса Microsoft (лучшее качество в Edge)
+      let kzVoice = voices.find(v => v.name.includes('Aigul') || v.name.includes('Daulet'));
+
+      // Если их нет, ищем любой с кодом 'kk'
+      if (!kzVoice) {
+        kzVoice = voices.find(v => v.lang.toLowerCase().includes('kk'));
+      }
+
+      if (kzVoice) {
+        utterance.voice = kzVoice;
+        console.log('Выбран казахский голос:', kzVoice.name);
+      } else {
+        console.warn('Казахский голос не найден. Попробуйте установить пакет в настройках Windows или использовать Edge Online.');
+      }
+
+      utterance.onend = () => {
+        this.zone.run(() => { this.isAudioPlaying = false; this.cdr.detectChanges(); });
+      };
+
+      window.speechSynthesis.speak(utterance);
+      this.isAudioPlaying = true;
+      this.cdr.detectChanges();
     };
 
-    this.currentUtterance.onerror = () => {
-      this.zone.run(() => {
-        this.isAudioPlaying = false;
-        this.cdr.detectChanges();
-      });
-    };
-
-    window.speechSynthesis.speak(this.currentUtterance);
-    this.isAudioPlaying = true;
+    // Если голоса еще не загрузились, подписываемся на событие их загрузки
+    if (window.speechSynthesis.getVoices().length === 0) {
+      window.speechSynthesis.onvoiceschanged = () => setKzVoice();
+    } else {
+      setKzVoice();
+    }
   }
-
   initSpeechRecognition() {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRecognition) {
