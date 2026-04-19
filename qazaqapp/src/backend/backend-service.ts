@@ -47,8 +47,9 @@ import {
   WordOfDayView,
 } from '../app/shared/models/profile';
 import {
+  createPersistenceStore,
   DatabaseSchema,
-  FileStore,
+  PersistenceStore,
   StoredAchievementUnlock,
   StoredCertificate,
   StoredFeedbackMessage,
@@ -167,7 +168,7 @@ export interface SessionResult extends AuthResponse {
 export class BackendService {
   private readonly catalog: LearningCatalog;
 
-  constructor(private readonly store = new FileStore()) {
+  constructor(private readonly store: PersistenceStore = createPersistenceStore()) {
     this.catalog = learningCatalog;
   }
 
@@ -175,11 +176,11 @@ export class BackendService {
     return this.catalog;
   }
 
-  getLeaderboard(limit = 20): LeaderboardEntry[] {
+  getLeaderboard(limit = 20): Promise<LeaderboardEntry[]> {
     return this.store.update((db) => this.buildLeaderboard(db, limit));
   }
 
-  register(payload: RegisterPayload, meta: RequestMeta): SessionResult {
+  register(payload: RegisterPayload, meta: RequestMeta): Promise<SessionResult> {
     const name = payload.name?.trim();
     const email = normaliseEmail(payload.email);
     const password = payload.password?.trim();
@@ -234,7 +235,7 @@ export class BackendService {
     });
   }
 
-  login(payload: LoginPayload, meta: RequestMeta): SessionResult {
+  login(payload: LoginPayload, meta: RequestMeta): Promise<SessionResult> {
     const email = normaliseEmail(payload.email);
     const password = payload.password?.trim();
 
@@ -265,17 +266,17 @@ export class BackendService {
     });
   }
 
-  logout(token: string | null): void {
+  async logout(token: string | null): Promise<void> {
     if (!token) {
       return;
     }
 
-    this.store.update((db) => {
+    await this.store.update((db) => {
       db.sessions = db.sessions.filter((session) => session.tokenHash !== hashToken(token));
     });
   }
 
-  getSessionUser(token: string | null): SessionUser | null {
+  async getSessionUser(token: string | null): Promise<SessionUser | null> {
     if (!token) {
       return null;
     }
@@ -298,7 +299,7 @@ export class BackendService {
     });
   }
 
-  getProfile(userId: string): ProfileResponse {
+  getProfile(userId: string): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.syncUserSystems(user.id, db);
@@ -306,7 +307,7 @@ export class BackendService {
     });
   }
 
-  selectTeacher(userId: string, payload: TeacherSelectionPayload): ProfileResponse {
+  selectTeacher(userId: string, payload: TeacherSelectionPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       if (user.role !== 'student') {
@@ -328,7 +329,7 @@ export class BackendService {
     });
   }
 
-  requestTeacherChange(userId: string, payload: TeacherChangeRequestPayload): ProfileResponse {
+  requestTeacherChange(userId: string, payload: TeacherChangeRequestPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       if (user.role !== 'student') {
@@ -364,7 +365,7 @@ export class BackendService {
     });
   }
 
-  submitFeedback(userId: string | null, payload: FeedbackPayload): ProfileResponse | { ok: true } {
+  submitFeedback(userId: string | null, payload: FeedbackPayload): Promise<ProfileResponse | { ok: true }> {
     return this.store.update((db) => {
       const message = payload.message.trim();
       if (!message) {
@@ -384,7 +385,7 @@ export class BackendService {
     });
   }
 
-  createTeacherTask(userId: string, payload: TeacherTaskPayload): ProfileResponse {
+  createTeacherTask(userId: string, payload: TeacherTaskPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const teacher = this.requireUser(userId, db);
       if (teacher.role !== 'teacher') {
@@ -417,7 +418,7 @@ export class BackendService {
     });
   }
 
-  completeStudentTask(userId: string, payload: StudentTaskCompletionPayload): ProfileResponse {
+  completeStudentTask(userId: string, payload: StudentTaskCompletionPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       const task = db.teacherTasks.find((item) => item.id === payload.taskId && item.studentId === user.id);
@@ -434,7 +435,7 @@ export class BackendService {
     });
   }
 
-  saveCheckpoint(userId: string, payload: CheckpointPayload): ProfileResponse {
+  saveCheckpoint(userId: string, payload: CheckpointPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.assertCheckpointExists(payload.levelId, payload.contentType, payload.itemId);
@@ -446,7 +447,7 @@ export class BackendService {
     });
   }
 
-  saveDiagnostic(userId: string, payload: DiagnosticPayload): { recommendedLevel: LevelId; profile: ProfileResponse } {
+  saveDiagnostic(userId: string, payload: DiagnosticPayload): Promise<{ recommendedLevel: LevelId; profile: ProfileResponse }> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       const responses = Array.isArray(payload.responses) ? payload.responses : [];
@@ -483,7 +484,7 @@ export class BackendService {
     });
   }
 
-  saveVideoProgress(userId: string, payload: VideoProgressPayload): ProfileResponse {
+  saveVideoProgress(userId: string, payload: VideoProgressPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.assertVideoExists(payload.levelId, payload.lessonId);
@@ -526,7 +527,7 @@ export class BackendService {
     });
   }
 
-  saveGrammarProgress(userId: string, payload: GrammarProgressPayload): ProfileResponse {
+  saveGrammarProgress(userId: string, payload: GrammarProgressPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.assertGrammarExists(payload.levelId, payload.topicId);
@@ -575,7 +576,7 @@ export class BackendService {
     });
   }
 
-  saveShadowingProgress(userId: string, payload: ShadowingProgressPayload): ProfileResponse {
+  saveShadowingProgress(userId: string, payload: ShadowingProgressPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.assertShadowingExists(payload.levelId, payload.taskId);
@@ -624,7 +625,7 @@ export class BackendService {
     });
   }
 
-  saveSkillProgress(userId: string, payload: SkillProgressPayload): ProfileResponse {
+  saveSkillProgress(userId: string, payload: SkillProgressPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       const questions = this.getSkillQuestions(payload.levelId, payload.skillType);
@@ -681,7 +682,7 @@ export class BackendService {
     });
   }
 
-  saveMiniGameProgress(userId: string, payload: MiniGameProgressPayload): ProfileResponse {
+  saveMiniGameProgress(userId: string, payload: MiniGameProgressPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       this.assertMiniGameExists(payload.levelId, payload.gameType, payload.gameId);
@@ -714,7 +715,7 @@ export class BackendService {
     });
   }
 
-  saveModuleTest(userId: string, payload: ModuleTestPayload): ProfileResponse {
+  saveModuleTest(userId: string, payload: ModuleTestPayload): Promise<ProfileResponse> {
     return this.store.update((db) => {
       const user = this.requireUser(userId, db);
       const questions = this.getModuleQuestions(payload.levelId);

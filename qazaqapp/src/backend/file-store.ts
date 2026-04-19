@@ -203,6 +203,12 @@ export interface DatabaseSchema {
   certificates: StoredCertificate[];
 }
 
+export interface PersistenceStore {
+  read(): Promise<DatabaseSchema>;
+  write(data: DatabaseSchema): Promise<void>;
+  update<T>(updater: (data: DatabaseSchema) => T | Promise<T>): Promise<T>;
+}
+
 export function createEmptyDatabase(): DatabaseSchema {
   const now = new Date().toISOString();
   return {
@@ -229,21 +235,21 @@ export function createEmptyDatabase(): DatabaseSchema {
   };
 }
 
-export class FileStore {
+export class FileStore implements PersistenceStore {
   private readonly filePath: string;
 
-  constructor(filePath = process.env['QAZAQ_DATA_FILE'] || resolve(process.cwd(), 'data', 'qazaq-db.json')) {
+  constructor(filePath = process.env['QAZAQ_DATA_FILE'] || defaultDataFile()) {
     this.filePath = resolve(filePath);
     this.ensureStorage();
   }
 
-  read(): DatabaseSchema {
+  async read(): Promise<DatabaseSchema> {
     this.ensureStorage();
     const parsed = JSON.parse(readFileSync(this.filePath, 'utf-8')) as Partial<DatabaseSchema>;
     return migrateDatabase(parsed);
   }
 
-  write(data: DatabaseSchema): void {
+  async write(data: DatabaseSchema): Promise<void> {
     const dir = dirname(this.filePath);
     mkdirSync(dir, { recursive: true });
 
@@ -253,10 +259,10 @@ export class FileStore {
     renameSync(tempPath, this.filePath);
   }
 
-  update<T>(updater: (data: DatabaseSchema) => T): T {
-    const data = this.read();
-    const result = updater(data);
-    this.write(data);
+  async update<T>(updater: (data: DatabaseSchema) => T | Promise<T>): Promise<T> {
+    const data = await this.read();
+    const result = await updater(data);
+    await this.write(data);
     return result;
   }
 
@@ -278,6 +284,96 @@ export class FileStore {
       this.write(createEmptyDatabase());
     }
   }
+}
+
+class SupabaseStore implements PersistenceStore {
+  private readonly baseUrl: string;
+  private readonly serviceKey: string;
+  private readonly tableName: string;
+  private readonly rowId: string;
+
+  constructor() {
+    this.baseUrl = process.env['SUPABASE_URL']?.trim().replace(/\/+$/, '') ?? '';
+    this.serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']?.trim() ?? '';
+    this.tableName = process.env['SUPABASE_STATE_TABLE']?.trim() || 'app_state';
+    this.rowId = process.env['SUPABASE_STATE_ROW_ID']?.trim() || 'main';
+  }
+
+  async read(): Promise<DatabaseSchema> {
+    const response = await fetch(
+      `${this.baseUrl}/rest/v1/${this.tableName}?id=eq.${encodeURIComponent(this.rowId)}&select=payload`,
+      {
+        headers: this.headers(),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Supabase read failed with status ${response.status}.`);
+    }
+
+    const rows = (await response.json()) as Array<{ payload?: Partial<DatabaseSchema> }>;
+    const payload = rows[0]?.payload;
+    if (!payload) {
+      const empty = createEmptyDatabase();
+      await this.write(empty);
+      return empty;
+    }
+
+    return migrateDatabase(payload);
+  }
+
+  async write(data: DatabaseSchema): Promise<void> {
+    data.meta.updatedAt = new Date().toISOString();
+
+    const response = await fetch(`${this.baseUrl}/rest/v1/${this.tableName}`, {
+      method: 'POST',
+      headers: {
+        ...this.headers(),
+        Prefer: 'resolution=merge-duplicates,return=minimal',
+      },
+      body: JSON.stringify({
+        id: this.rowId,
+        payload: data,
+        updated_at: data.meta.updatedAt,
+      }),
+    });
+
+    if (!response.ok) {
+      const message = await response.text().catch(() => '');
+      throw new Error(`Supabase write failed with status ${response.status}. ${message}`.trim());
+    }
+  }
+
+  async update<T>(updater: (data: DatabaseSchema) => T | Promise<T>): Promise<T> {
+    const data = await this.read();
+    const result = await updater(data);
+    await this.write(data);
+    return result;
+  }
+
+  private headers(): Record<string, string> {
+    return {
+      apikey: this.serviceKey,
+      Authorization: `Bearer ${this.serviceKey}`,
+      'content-type': 'application/json',
+    };
+  }
+}
+
+export function createPersistenceStore(): PersistenceStore {
+  if (process.env['SUPABASE_URL'] && process.env['SUPABASE_SERVICE_ROLE_KEY']) {
+    return new SupabaseStore();
+  }
+
+  return new FileStore();
+}
+
+function defaultDataFile(): string {
+  if (process.env['VERCEL']) {
+    return '/tmp/qazaq-db.json';
+  }
+
+  return resolve(process.cwd(), 'data', 'qazaq-db.json');
 }
 
 function migrateDatabase(parsed: Partial<DatabaseSchema>): DatabaseSchema {
