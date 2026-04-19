@@ -1,0 +1,122 @@
+<section class="arcade-shell">
+  <header class="arcade-hero">
+    <div>
+      <p class="eyebrow">{{ lang.t('arcade_lab') }}</p>
+      <h1>{{ levelId().toUpperCase() }} {{ lang.t('mini_games') }}</h1>
+      <p>{{ introText() }}</p>
+    </div>
+    <a class="back-link" [routerLink]="['/levels', levelId()]">{{ lang.t('back_to_level') }}</a>
+  </header>
+
+  @if (loading()) {
+    <div class="panel">{{ lang.t('loading_arcade') }}</div>
+  } @else {
+    <div class="game-picker">
+      @for (game of games(); track game.id) {
+        <button
+          class="game-chip"
+          type="button"
+          [class.active]="selectedGameId() === game.id"
+          (click)="selectGame(game.id)">
+          <span>{{ gameTitle(game) }}</span>
+          <small>{{ gameTypeLabel(game) }}</small>
+        </button>
+      }
+    </div>
+
+    @if (selectedGame(); as game) {
+      <section class="game-stage panel">
+        <div class="stage-header">
+          <div>
+            <p class="stage-type">{{ gameTypeLabel(game) }}</p>
+            <h2>{{ gameTitle(game) }}</h2>
+            <p>{{ gameInstructions(game) }}</p>
+          </div>
+          <button class="submit-btn" type="button" (click)="submit()">{{ lang.t('save_result') }}</button>
+        </div>
+
+        @if (game.type === 'match-words' && matchGame(); as matchGame) {
+          <div class="match-grid">
+            @for (pair of matchGame.pairs; track pair.id) {
+              <label class="match-row">
+                <span class="word">{{ pair.kazakh }}</span>
+                <select [value]="selectedMatch(pair.id)" (change)="chooseMatch(pair.id, $any($event.target).value)">
+                  <option value="">{{ lang.t('select_translation') }}</option>
+                  @for (option of availableTranslations(); track option.id) {
+                    <option [value]="option.id" [disabled]="isTranslationTaken(option.id, pair.id)">{{ option.label }}</option>
+                  }
+                </select>
+              </label>
+            }
+          </div>
+        }
+
+        @if (game.type === 'drag-and-drop' && dragGame(); as dragGame) {
+          <div class="drag-layout">
+            <div class="token-bank">
+              <h3>{{ lang.t('token_bank') }}</h3>
+              <div class="token-grid">
+                @for (token of dragBank(); track token) {
+                  <button
+                    class="token"
+                    type="button"
+                    draggable="true"
+                    (dragstart)="onDragStart(token)">
+                    {{ token }}
+                  </button>
+                }
+              </div>
+            </div>
+
+            <div class="drop-zone">
+              <h3>{{ lang.t('correct_order') }}</h3>
+              <div class="slot-grid">
+                @for (slot of dragSlots(); track $index) {
+                  <button
+                    class="slot"
+                    type="button"
+                    (dragover)="allowDrop($event)"
+                    (drop)="onDropToSlot($index)"
+                    (click)="clearSlot($index)">
+                    {{ slot || (lang.t('drop') + ' #' + ($index + 1)) }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (game.type === 'listening-sprint' && listeningGame(); as listeningGame) {
+          <div class="round-list">
+            @for (round of listeningGame.rounds; track round.id) {
+              <article class="round-card">
+                <div class="round-toolbar">
+                  <button class="tool-btn" type="button" (click)="playRoundAudio(round.audioText)">
+                    <span class="tool-icon">▶</span>
+                    <span>{{ lang.t('play_audio') }}</span>
+                  </button>
+                </div>
+                <h3>{{ roundPrompt(game.id, round.id, round.prompt) }}</h3>
+                <div class="option-grid">
+                  @for (option of roundOptions(game.id, round.id, round.options); track option; let index = $index) {
+                    <button
+                      class="option-btn"
+                      type="button"
+                      [class.selected]="listeningAnswers()[round.id] === index"
+                      (click)="chooseListening(round.id, index)">
+                      {{ option }}
+                    </button>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        }
+
+        @if (message()) {
+          <p class="status">{{ message() }}</p>
+        }
+      </section>
+    }
+  }
+</section>

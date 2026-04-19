@@ -1,9 +1,141 @@
-<div class="hero">
-  <h1>Добро пожаловать в QazaqApp</h1>
-  <p>Интерактивная платформа для изучения казахского языка. Пройди диагностику или выбери уровень самостоятельно!</p>
+<section class="home-shell">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ lang.t('hero_eyebrow') }}</p>
+      <h1>{{ lang.t('hero_title') }}</h1>
+      <p class="hero-text">{{ lang.t('hero_text') }}</p>
 
-  <div class="cta-buttons">
-    <button routerLink="/diagnostic" class="btn primary">Пройти тест (Узнать уровень)</button>
-    <button routerLink="/levels" class="btn secondary">Список уровней</button>
-  </div>
-</div>
+      <div class="hero-actions">
+        @if (auth.user()) {
+          <a class="primary-btn" routerLink="/profile">{{ lang.t('open_mission_control') }}</a>
+          <a class="secondary-btn" routerLink="/levels">{{ lang.t('continue_levels') }}</a>
+        } @else {
+          <a class="primary-btn" routerLink="/register">{{ lang.t('create_profile') }}</a>
+          <a class="secondary-btn" routerLink="/diagnostic">{{ lang.t('take_diagnostic') }}</a>
+        }
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      @if (profile(); as profile) {
+        <div class="hero-stat">
+          <span>{{ lang.t('rank') }}</span>
+          <strong>{{ rankTitle(profile.user.xpLevel) }}</strong>
+        </div>
+        <div class="hero-stat">
+          <span>XP</span>
+          <strong>{{ profile.user.xp }}</strong>
+        </div>
+        <div class="hero-stat">
+          <span>{{ lang.t('streak') }}</span>
+          <strong>{{ profile.user.streak }} {{ lang.t('days') }}</strong>
+        </div>
+        <div class="hero-resume">
+          <p>{{ lang.t('resume') }}</p>
+          <a [routerLink]="profile.resume?.route ?? '/levels'">{{ profile.resume?.title ?? lang.t('choose_first_module') }}</a>
+        </div>
+      } @else {
+        <div class="hero-stat">
+          <span>{{ lang.t('stages') }}</span>
+          <strong>{{ lang.t('four_stages') }}</strong>
+        </div>
+        <div class="hero-stat">
+          <span>{{ lang.t('modes') }}</span>
+          <strong>{{ lang.t('video_practice_arcade') }}</strong>
+        </div>
+        <div class="hero-stat">
+          <span>{{ lang.t('motivation') }}</span>
+          <strong>{{ lang.t('xp_streaks_badges') }}</strong>
+        </div>
+        <div class="hero-resume">
+          <p>{{ lang.t('quick_start') }}</p>
+          <a routerLink="/levels">{{ lang.t('browse_learning_path') }}</a>
+        </div>
+      }
+    </div>
+  </section>
+
+  @if (profile(); as profile) {
+    <section class="mission-grid">
+      @for (card of missionCards(); track card.title) {
+        <a class="mission-card" [routerLink]="card.route">
+          <p>{{ card.title }}</p>
+          <strong>{{ card.value }}</strong>
+        </a>
+      }
+    </section>
+  }
+
+  <section class="dual-grid">
+    <article class="word-card">
+      <p class="eyebrow">{{ lang.t('word_of_day') }}</p>
+      @if (wordOfDay(); as word) {
+        <h2>{{ text(word.word) }}</h2>
+        <p class="translation">{{ text(word.translation) }}</p>
+        <p class="example">{{ text(word.example) }}</p>
+        <small>{{ text(word.tip) }}</small>
+      }
+    </article>
+
+    @if (profile(); as profile) {
+      <article class="word-card">
+        <p class="eyebrow">{{ lang.t('daily_tradition') }}</p>
+        <h2>{{ text(profile.cultureSpotlight.title) }}</h2>
+        <p class="translation">{{ text(profile.cultureSpotlight.phrase) }}</p>
+        <p class="example">{{ text(profile.cultureSpotlight.summary) }}</p>
+        <small>{{ text(profile.cultureSpotlight.practiceTip) }}</small>
+      </article>
+    }
+
+    <article class="leaderboard-card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">{{ lang.t('community_pulse') }}</p>
+          <h2>{{ lang.t('leaderboard_preview') }}</h2>
+        </div>
+        <a routerLink="/leaderboard">{{ lang.t('see_all') }}</a>
+      </div>
+
+      @if (leaderboard().length) {
+        <div class="leaderboard-list">
+          @for (entry of leaderboard(); track entry.userId) {
+            <div class="leader-row">
+              <div class="leader-person">
+                <span class="leader-rank">#{{ entry.rank }}</span>
+                <span class="leader-avatar">{{ entry.avatar }}</span>
+                <div>
+                  <strong>{{ entry.name }}</strong>
+                  <small>{{ roleLabel(entry.role) }} / {{ crownTitle(entry.totalPoints) }}</small>
+                </div>
+              </div>
+              <span class="leader-score">{{ entry.totalPoints }} pts</span>
+            </div>
+          }
+        </div>
+      } @else if (!loading()) {
+        <p class="empty-text">{{ lang.t('leaderboard_empty') }}</p>
+      }
+    </article>
+  </section>
+
+  <section class="levels-section">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ lang.t('structured_path') }}</p>
+        <h2>{{ lang.t('level_roadmap') }}</h2>
+      </div>
+      <a routerLink="/levels">{{ lang.t('open_all_levels') }}</a>
+    </div>
+
+    <div class="roadmap-grid">
+      @for (level of levels(); track level.id) {
+        <article class="roadmap-card">
+          <span class="roadmap-order">0{{ level.order }}</span>
+          <h3>{{ levelName(level) }}</h3>
+          <p>{{ levelDesc(level) }}</p>
+          <small>{{ levelGoal(level) }}</small>
+        </article>
+      }
+    </div>
+  </section>
+</section>

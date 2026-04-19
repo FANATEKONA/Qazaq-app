@@ -1,0 +1,133 @@
+:host {
+  display: block;
+}
+
+.certificate-shell {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.certificate-card,
+.locked-card {
+  border-radius: 36px;
+  border: 1px solid rgba(18, 61, 60, 0.1);
+  box-shadow: 0 22px 70px rgba(18, 61, 60, 0.08);
+}
+
+.certificate-card {
+  background: linear-gradient(135deg, rgba(255, 251, 243, 0.98), rgba(251, 237, 213, 0.92));
+  padding: 1rem;
+}
+
+.frame {
+  border-radius: 30px;
+  border: 2px solid rgba(182, 92, 52, 0.25);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b65c34;
+  font-size: 0.78rem;
+}
+
+h1 {
+  margin: 0;
+  color: #123d3c;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+}
+
+.subtitle,
+.statement,
+.locked-card p {
+  margin: 0.9rem auto 0;
+  max-width: 700px;
+  color: #665f5a;
+  line-height: 1.7;
+}
+
+.recipient {
+  margin: 2.2rem 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.recipient-label,
+.certificate-meta span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  color: #8d7c6f;
+}
+
+.recipient strong,
+.certificate-meta strong {
+  color: #123d3c;
+}
+
+.recipient strong {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.certificate-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.certificate-meta div {
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.print-btn,
+.secondary-link {
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.print-btn {
+  border: 0;
+  background: linear-gradient(135deg, #123d3c, #1f6662);
+  color: #fff;
+  padding: 0.95rem 1.4rem;
+  cursor: pointer;
+}
+
+.secondary-link {
+  background: rgba(18, 61, 60, 0.08);
+  color: #123d3c;
+  padding: 0.95rem 1.4rem;
+}
+
+.locked-card {
+  background: rgba(255, 251, 243, 0.86);
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .certificate-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .frame {
+    padding: 2rem 1.2rem;
+  }
+}

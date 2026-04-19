@@ -1,82 +1,81 @@
-<div class="lesson-layout">
+@if (currentTopic) {
+  <div class="lesson-layout">
+    <aside class="sidebar">
+      <button class="back-btn" type="button" [routerLink]="['/levels', levelId]">← {{ lang.t('back_to_module') }}</button>
+      <h3>{{ topicsTitle() }}</h3>
+      <ul class="lesson-list">
+        @for (topic of topics; track topic.id) {
+          <li>
+            <a [routerLink]="['/levels', levelId, 'grammar', topic.id]" routerLinkActive="active" class="lesson-link">
+              <span class="lesson-title">{{ topicTitle(topic) }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </aside>
 
-  <aside class="sidebar">
-    <button class="back-btn" [routerLink]="['/levels', levelId]">← Назад к модулю</button>
-    <h3>Темы по грамматике</h3>
-    <ul class="lesson-list">
-      @for (topic of topics; track topic.id) {
-        <li>
-          <a [routerLink]="['/levels', levelId, 'grammar', topic.id]"
-             routerLinkActive="active"
-             class="lesson-link">
-            <span class="lesson-title">{{ topic.title }}</span>
-          </a>
-        </li>
-      }
-    </ul>
-  </aside>
+    <main class="content-area">
+      <div class="grammar-header">
+        <span class="badge">{{ badgeLabel() }}</span>
+        <h2>{{ topicTitle(currentTopic) }}</h2>
+      </div>
 
-  <main class="content-area">
-    <div class="grammar-header">
-      <span class="badge">Правило</span>
-      <h2>{{ currentTopic.title }}</h2>
-    </div>
+      <div class="rule-box">
+        <h3>{{ ruleHeading() }}</h3>
+        <p>{{ topicRule(currentTopic) }}</p>
 
-    <div class="rule-box">
-      <h3>Как это работает:</h3>
-      <p>{{ currentTopic.rule }}</p>
+        @if (topicExamples(currentTopic).length > 0) {
+          <div class="example-box">
+            <strong>{{ examplesLabel() }}:</strong>
+            @for (example of topicExamples(currentTopic); track $index) {
+              <p [innerHTML]="example"></p>
+            }
+          </div>
+        }
+      </div>
 
-      @if (currentTopic.examples && currentTopic.examples.length > 0) {
-        <div class="example-box">
-          <strong>Примеры:</strong>
-          @for (ex of currentTopic.examples; track $index) {
-            <p [innerHTML]="ex"></p>
-          }
-        </div>
-      }
-    </div>
+      <div class="practice-box">
+        <h3>{{ practiceHeading() }}</h3>
+        <p>{{ practiceText() }}</p>
 
-    <div class="practice-box">
-      <h3>Закрепление на практике</h3>
-      <p>Здесь будут интерактивные упражнения на тему «{{ currentTopic.title }}».</p>
+        @if (!isExerciseActive) {
+          <button class="btn primary" type="button" (click)="toggleExercise()">{{ startExerciseLabel() }}</button>
+        } @else {
+          <div class="exercise-content">
+            <p><strong>{{ taskLabel() }}:</strong> {{ exercisePrompt(currentTopic) }}</p>
 
-      @if (!isExerciseActive) {
-        <button class="btn primary" (click)="toggleExercise()">Начать упражнение</button>
-      } @else {
-        <div class="exercise-content">
-          @if (currentTopic.exercise) {
-            <p><strong>Задание:</strong> Вставьте правильное окончание.</p>
             <div class="input-group">
-              <span>{{ currentTopic.exercise.word }} + </span>
-              <input type="text"
-                     placeholder="ваш ответ..."
-                     class="exercise-input"
-                     [(ngModel)]="userAnswer"
-                     (keyup.enter)="checkAnswer()">
+              <input
+                type="text"
+                [placeholder]="answerPlaceholder()"
+                class="exercise-input"
+                [(ngModel)]="userAnswer"
+                (keyup.enter)="checkAnswer()">
             </div>
 
             @if (isChecked) {
               <div class="feedback">
                 @if (isCorrect) {
-                  <p class="success-text">✅ Правильно! Отличная работа.</p>
+                  <p class="success-text">✅ {{ successText() }}</p>
                 } @else {
-                  <p class="error-text">❌ Ошибка. Попробуй еще раз.</p>
+                  <p class="error-text">❌ {{ errorText() }}</p>
                 }
               </div>
             }
 
+            @if (saveMessage) {
+              <p>{{ saveMessage }}</p>
+            }
+
             <div class="exercise-actions">
-              <button class="btn primary" (click)="checkAnswer()">Проверить</button>
-              <button class="btn secondary" (click)="toggleExercise()">Скрыть</button>
+              <button class="btn primary" type="button" (click)="checkAnswer()">{{ checkLabel() }}</button>
+              <button class="btn secondary" type="button" (click)="toggleExercise()">{{ hideLabel() }}</button>
             </div>
-
-          } @else {
-            <p>Упражнение для этой темы находится в разработке.</p>
-            <button class="btn secondary" (click)="toggleExercise()">Скрыть</button>
-          }
-        </div>
-      }
-    </div>
-  </main>
-
-</div>
+          </div>
+        }
+      </div>
+    </main>
+  </div>
+} @else {
+  <p>{{ loadingText() }}</p>
+}

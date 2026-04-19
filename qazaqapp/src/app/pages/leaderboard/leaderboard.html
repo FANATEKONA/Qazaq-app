@@ -1,0 +1,61 @@
+<section class="leaderboard-shell">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">{{ title('eyebrow') }}</p>
+      <h1>{{ lang.t('leaderboard') }}</h1>
+      <p>{{ title('description') }}</p>
+    </div>
+    <a class="hero-link" routerLink="/profile">{{ title('openProfile') }}</a>
+  </header>
+
+  @if (loading()) {
+    <div class="panel">{{ title('loading') }}</div>
+  } @else if (error()) {
+    <div class="panel error">{{ error() }}</div>
+  } @else {
+    <section class="podium">
+      @for (entry of topThree(); track entry.userId) {
+        <article class="podium-card" [class.first]="entry.rank === 1">
+          <div class="avatar">{{ entry.avatar }}</div>
+          <p class="rank">#{{ entry.rank }}</p>
+          <h2>{{ entry.name }}</h2>
+          <p class="meta">{{ roleLabel(entry.role) }} / {{ crownTitle(entry.totalPoints) }}</p>
+          <dl>
+            <div>
+              <dt>{{ title('points') }}</dt>
+              <dd>{{ entry.totalPoints }}</dd>
+            </div>
+            <div>
+              <dt>XP</dt>
+              <dd>{{ entry.xp }}</dd>
+            </div>
+            <div>
+              <dt>{{ lang.t('streak') }}</dt>
+              <dd>{{ entry.streak }} {{ lang.t('days') }}</dd>
+            </div>
+          </dl>
+        </article>
+      }
+    </section>
+
+    <section class="panel ranking-list">
+      @for (entry of runners(); track entry.userId) {
+        <article class="row" [class.me]="auth.user()?.id === entry.userId">
+          <div class="person">
+            <span class="place">#{{ entry.rank }}</span>
+            <span class="avatar">{{ entry.avatar }}</span>
+            <div>
+              <h3>{{ entry.name }}</h3>
+              <p>{{ roleLabel(entry.role) }} / {{ crownTitle(entry.totalPoints) }}</p>
+            </div>
+          </div>
+          <div class="metrics">
+            <span>{{ entry.totalPoints }} {{ title('pointsShort') }}</span>
+            <span>{{ entry.xp }} XP</span>
+            <span>{{ entry.streak }} {{ lang.t('days') }}</span>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</section>

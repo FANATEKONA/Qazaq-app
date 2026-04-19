@@ -1,44 +1,73 @@
-<div class="test-wrapper">
-  <div class="test-card">
+@if (questions.length && current; as question) {
+  <section class="test-wrapper">
+    <article class="test-card">
+      <header class="test-header">
+        <h2>{{ lang.t('module_test') }}: {{ levelId | uppercase }}</h2>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressWidth"></div>
+        </div>
+      </header>
 
-    <header class="test-header">
-      <h2>Итоговый тест: Уровень {{ levelId | uppercase }}</h2>
-      <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="progressWidth"></div>
-      </div>
-    </header>
+      @if (!isFinished) {
+        <div class="question-body">
+          <span class="step-info">{{ lang.t('question') }} {{ currentStep + 1 }} / {{ questions.length }}</span>
+          <h3 class="question-text">{{ prompt() }}</h3>
 
-    @if (!isFinished) {
-      <div class="question-body">
-        <span class="step-info">Вопрос {{ currentStep + 1 }} из {{ testQuestions.length }}</span>
-        <h3 class="question-text">{{ testQuestions[currentStep].q }}</h3>
+          @if (helper()) {
+            <p class="feedback-msg">{{ helper() }}</p>
+          }
 
-        <div class="options-list">
-          @for (opt of testQuestions[currentStep].options; track $index) {
-            <button class="option-item" (click)="answer($index)">
-              {{ opt }}
+          @if (question.options?.length) {
+            <div class="options-list">
+              @for (opt of question.options; track $index) {
+                <button class="option-item" type="button" [class.active]="selectedOption === $index" (click)="selectOption($index)">
+                  {{ optionLabel(opt) }}
+                </button>
+              }
+            </div>
+          } @else {
+            <textarea class="text-input" [ngModel]="currentAnswer" (ngModelChange)="updateAnswer($event)" [placeholder]="placeholder()"></textarea>
+          }
+
+          @if (question.type === 'listening') {
+            <button class="btn secondary" type="button" (click)="playAudio()">
+              {{ lang.t('play_audio') }} ({{ remainingAudioPlays(question) }} {{ lang.t('plays_left') }})
             </button>
           }
+
+          @if (question.type === 'speaking') {
+            <button class="btn secondary" type="button" (click)="toggleRecording()">
+              {{ isRecording ? lang.t('stop_recording') : lang.t('record_answer') }}
+            </button>
+            <p class="feedback-msg">{{ lang.t('attempts_left') }}: {{ remainingSpeakingAttempts(question) }}</p>
+          }
+
+          @if (statusMessage) {
+            <p class="feedback-msg">{{ statusMessage }}</p>
+          }
+
+          <button class="btn primary" type="button" (click)="next()">
+            {{ currentStep === questions.length - 1 ? lang.t('finish') : lang.t('next') }}
+          </button>
         </div>
-      </div>
-    } @else {
-      <div class="result-body">
-        <div class="result-icon">{{ score > 3 ? '🎉' : '📚' }}</div>
-        <h3>Тест завершен!</h3>
-        <p class="score-text">Ваш результат: <strong>{{ score }} из {{ testQuestions.length }}</strong></p>
+      } @else {
+        <div class="result-body">
+          <div class="result-icon">{{ passedScore() ? lang.t('pass_badge') : lang.t('retry_badge') }}</div>
+          <h3>{{ lang.t('test_complete') }}</h3>
+          <p class="score-text">{{ lang.t('score') }}: <strong>{{ score }} / {{ questions.length }}</strong></p>
 
-        @if (score > 3) {
-          <p class="feedback-msg">Отлично! Вы успешно освоили материалы уровня {{ levelId | uppercase }}.</p>
-        } @else {
-          <p class="feedback-msg">Неплохо, но мы рекомендуем еще раз повторить некоторые уроки.</p>
-        }
+          @if (statusMessage) {
+            <p class="feedback-msg">{{ statusMessage }}</p>
+          }
 
-        <div class="action-buttons">
-          <button class="btn primary" [routerLink]="['/levels']">К списку уровней</button>
-          <button class="btn secondary" [routerLink]="['/levels', levelId]">Вернуться в модуль</button>
+          <div class="action-buttons">
+            <button class="btn primary" [routerLink]="['/certificates', levelId]">{{ lang.t('certificate') }}</button>
+            <button class="btn secondary" [routerLink]="['/levels', levelId]">{{ lang.t('back_to_module') }}</button>
+          </div>
         </div>
-      </div>
-    }
-
-  </div>
-</div>
+      }
+    </article>
+  </section>
+} @else {
+  <p>{{ lang.t('loading_module_test') }}</p>
+}

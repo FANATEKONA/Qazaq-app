@@ -1,80 +1,84 @@
-<div class="lesson-layout">
+@if (currentTask) {
+  <div class="lesson-layout">
+    <aside class="sidebar">
+      <button class="back-btn" type="button" [routerLink]="['/levels', levelId]">← {{ lang.t('back_to_module') }}</button>
+      <h3>{{ sidebarTitle() }}</h3>
+      <ul class="lesson-list">
+        @for (task of tasks; track task.id) {
+          <li>
+            <a [routerLink]="['/levels', levelId, 'shadowing', task.id]" routerLinkActive="active" class="lesson-link">
+              <span class="lesson-title">{{ taskTitle(task) }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </aside>
 
-  <aside class="sidebar">
-    <button class="back-btn" [routerLink]="['/levels', levelId]">← Назад к модулю</button>
-    <h3>Темы для Shadowing</h3>
-    <ul class="lesson-list">
-      @for (task of tasks; track task.id) {
-        <li>
-          <a [routerLink]="['/levels', levelId, 'shadowing', task.id]"
-             routerLinkActive="active"
-             class="lesson-link">
-            <span class="lesson-title">{{ task.title }}</span>
-          </a>
-        </li>
-      }
-    </ul>
-  </aside>
-
-  <main class="content-area">
-    <div class="shadowing-header">
-      <span class="badge">Говорение</span>
-      <h2>{{ currentTask.title }}</h2>
-      <p class="instruction">Слушайте аудиозапись и старайтесь повторять фразы вслух, максимально точно копируя интонацию и произношение диктора.</p>
-    </div>
-
-    <div class="audio-box">
-      <div class="audio-player">
-        <button class="play-btn" (click)="playAudio()">
-          {{ isAudioPlaying ? '⏸' : '▶' }}
-        </button>
-        <div class="progress-track">
-          <div class="progress-fill" [class.playing]="isAudioPlaying"></div>
-        </div>
-        <span class="time">{{ currentTask.audioLength }}</span>
-      </div>
-    </div>
-
-    <div class="text-boxes">
-      <div class="text-card original">
-        <h3>Қазақша:</h3>
-        <p>{{ currentTask.kazakh }}</p>
+    <main class="content-area">
+      <div class="shadowing-header">
+        <span class="badge">{{ badgeLabel() }}</span>
+        <h2>{{ taskTitle(currentTask) }}</h2>
+        <p class="instruction">{{ instructionText() }}</p>
       </div>
 
-      <div class="text-card translation">
-        <h3>Русский:</h3>
-        <p>{{ currentTask.russian }}</p>
-      </div>
-    </div>
-
-    <div class="recording-section">
-      <h3>Ваша очередь:</h3>
-
-      <button class="record-btn" [class.recording-active]="isRecording" (click)="toggleRecording()">
-        <span class="mic-icon">🎤</span>
-        {{ isRecording ? 'Остановить запись' : 'Начать запись' }}
-      </button>
-
-      @if (isRecording) {
-        <div class="recording-status">
-          <div class="pulse-dot"></div>
-          <span>Идет запись... Прочитайте текст вслух!</span>
-        </div>
-      }
-
-      @if (recognizedText) {
-        <div class="recognition-result">
-          <p><strong>Вы сказали:</strong> {{ recognizedText }}</p>
-          <div class="feedback" [class.success]="isMatch" [class.error]="!isMatch">
-            @if (isMatch) {
-              <span>✅ Отличное произношение! Браузер вас понял.</span>
-            } @else {
-              <span>❌ Не совсем точно. Попробуйте еще раз.</span>
-            }
+      <div class="audio-box">
+        <div class="audio-player">
+          <button class="play-btn" type="button" (click)="playAudio()">
+            {{ isAudioPlaying ? '⏸' : '▶' }}
+          </button>
+          <div class="progress-track">
+            <div class="progress-fill" [class.playing]="isAudioPlaying"></div>
           </div>
+          <span class="time">{{ currentTask.audioLength }}</span>
         </div>
-      }
-    </div>
-  </main>
+      </div>
 
-</div>
+      <div class="text-boxes">
+        <div class="text-card original">
+          <h3>{{ sourceLabel() }}</h3>
+          <p>{{ currentTask.kazakh }}</p>
+        </div>
+
+        <div class="text-card translation">
+          <h3>{{ meaningLabel() }}</h3>
+          <p>{{ taskMeaning(currentTask) }}</p>
+        </div>
+      </div>
+
+      <div class="recording-section">
+        <h3>{{ speakingTurnLabel() }}</h3>
+
+        <button class="record-btn" type="button" [class.recording-active]="isRecording" (click)="toggleRecording()">
+          <span class="mic-icon">🎤</span>
+          {{ recordButtonLabel() }}
+        </button>
+
+        @if (isRecording) {
+          <div class="recording-status">
+            <div class="pulse-dot"></div>
+            <span>{{ recordingStatusText() }}</span>
+          </div>
+        }
+
+        @if (recognizedText) {
+          <div class="recognition-result">
+            <p><strong>{{ recognizedLabel() }}:</strong> {{ recognizedText }}</p>
+            <div class="feedback" [class.success]="isMatch" [class.error]="!isMatch">
+              @if (isMatch) {
+                <span>✅ {{ successText() }}</span>
+              } @else {
+                <span>❌ {{ errorText() }}</span>
+              }
+            </div>
+          </div>
+        }
+
+        @if (saveMessage) {
+          <p>{{ saveMessage }}</p>
+        }
+      </div>
+    </main>
+  </div>
+} @else {
+  <p>{{ loadingText() }}</p>
+}

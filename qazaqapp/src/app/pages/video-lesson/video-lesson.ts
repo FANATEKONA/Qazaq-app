@@ -1,58 +1,84 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ActivatedRoute, ParamMap, RouterLink, RouterLinkActive } from '@angular/router';
+
+import { AuthService } from '../../core/services/auth.service';
+import { CatalogService } from '../../core/services/catalog.service';
+import { ProfileService } from '../../core/services/profile.service';
+import { LevelId, VideoLesson as VideoLessonItem } from '../../shared/models/content';
 
 @Component({
   selector: 'app-video-lesson',
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './video-lesson.html',
-  styleUrl: './video-lesson.css'
+  styleUrl: './video-lesson.css',
 })
 export class VideoLesson implements OnInit {
-  private route = inject(ActivatedRoute);
-  private sanitizer = inject(DomSanitizer);
+  private readonly route = inject(ActivatedRoute);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly catalog = inject(CatalogService);
+  private readonly auth = inject(AuthService);
+  private readonly profile = inject(ProfileService);
 
-  levelId: string = 'a1';
-  currentLessonId: string = '1';
+  levelId: LevelId = 'a1';
+  currentLessonId = '1';
+  lessons: VideoLessonItem[] = [];
+  saveMessage = '';
 
-  // Обновленная база с твоими ссылками
-  lessonsDatabase: { [key: string]: any[] } = {
-    'a1': [
-      { id: '1', title: 'Урок 1: Алфавит и звуки', duration: '04:31', youtubeId: 'DImQCP-CdDU' },
-      { id: '2', title: 'Урок 2: Приветствия', duration: '02:34', youtubeId: '5O5IGPbWWnQ' },
-      { id: '3', title: 'Урок 3: Личные местоимения', duration: '03:38', youtubeId: 'iujAEeFLnp8' },
-      { id: '4', title: 'Урок 4: Моя семья', duration: '0:46', youtubeId: 'm0tz11snjo8' },
-      // Для остальных пока оставим заглушки
-      { id: '5', title: 'Урок 5: Цифры и время', duration: '11:00', youtubeId: 'dQw4w9WgXcQ' },
-      { id: '6', title: 'Урок 6: Дни недели', duration: '07:45', youtubeId: 'dQw4w9WgXcQ' },
-      { id: '7', title: 'Урок 7: Еда и напитки', duration: '14:20', youtubeId: 'dQw4w9WgXcQ' },
-      { id: '8', title: 'Урок 8: Мой город', duration: '10:50', youtubeId: 'dQw4w9WgXcQ' },
-      { id: '9', title: 'Урок 9: Погода', duration: '08:40', youtubeId: 'dQw4w9WgXcQ' },
-      { id: '10', title: 'Урок 10: Мое хобби', duration: '13:10', youtubeId: 'dQw4w9WgXcQ' }
-    ],
-    'a2': [
-      { id: '1', title: 'Урок 1: Прошедшее время', duration: '11:20', youtubeId: 'dQw4w9WgXcQ' }
-    ]
-  };
-
-  lessons: any[] = [];
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.levelId = (params.get('levelId') || 'a1').toLowerCase();
-      this.currentLessonId = params.get('lessonId') || '1';
-      this.lessons = this.lessonsDatabase[this.levelId] || this.lessonsDatabase['a1'];
+  async ngOnInit(): Promise<void> {
+    await this.catalog.ensureLoaded();
+    this.route.paramMap.subscribe((params) => {
+      void this.applyRoute(params);
     });
   }
 
-  get currentLesson() {
-    return this.lessons.find(l => l.id === this.currentLessonId) || this.lessons[0];
+  get currentLesson(): VideoLessonItem | null {
+    return this.lessons.find((lesson) => lesson.id === this.currentLessonId) ?? this.lessons[0] ?? null;
   }
 
-  // Метод для безопасной вставки iframe
   getSafeUrl(videoId: string): SafeResourceUrl {
-    const url = `https://www.youtube.com/embed/${videoId}`;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
+  }
+
+  async markCompleted(): Promise<void> {
+    if (!this.auth.user()) {
+      this.saveMessage = 'Войдите, чтобы сохранить завершение урока.';
+      return;
+    }
+
+    try {
+      await this.profile.saveVideoProgress({
+        levelId: this.levelId,
+        lessonId: this.currentLessonId,
+        status: 'completed',
+      });
+      this.saveMessage = 'Урок отмечен как завершенный.';
+    } catch (error) {
+      this.saveMessage = error instanceof Error ? error.message : 'Не удалось сохранить прогресс.';
+    }
+  }
+
+  private async applyRoute(params: ParamMap): Promise<void> {
+    const catalog = await this.catalog.ensureLoaded();
+    this.levelId = ((params.get('levelId') || 'a1').toLowerCase() as LevelId);
+    this.currentLessonId = params.get('lessonId') || '1';
+    this.lessons = catalog.byLevel[this.levelId]?.videos ?? [];
+
+    if (!this.auth.user()) {
+      this.saveMessage = 'Войдите, чтобы сохранять текущий урок и прогресс.';
+      return;
+    }
+
+    try {
+      await this.profile.saveVideoProgress({
+        levelId: this.levelId,
+        lessonId: this.currentLessonId,
+        status: 'started',
+      });
+      this.saveMessage = 'Текущий урок сохранен.';
+    } catch (error) {
+      this.saveMessage = error instanceof Error ? error.message : 'Не удалось сохранить урок.';
+    }
   }
 }

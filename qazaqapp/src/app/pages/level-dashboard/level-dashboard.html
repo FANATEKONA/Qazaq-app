@@ -1,44 +1,95 @@
-<div class="dashboard-container">
-  <header class="dashboard-header">
-    <h1>Уровень {{ levelId | uppercase }}</h1>
-    <p>Программа обучения</p>
-  </header>
+@if (content(); as content) {
+  <section class="dashboard-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">{{ lang.t('level_studio') }}</p>
+        <h1>{{ text(content.level.name) }}</h1>
+        <p>{{ text(content.level.desc) }}</p>
+        <small>{{ text(content.level.goal) }}</small>
+      </div>
 
-  <div class="modules-grid">
-    <div class="module-card">
-      <div class="icon">🎥</div>
-      <h3>Видеоуроки</h3>
-      <p>Основы произношения и грамматики</p>
-      <button class="btn card-btn" [routerLink]="['/levels', levelId, 'video', '1']">Смотреть</button>
-    </div>
+      <aside class="hero-panel">
+        <div class="meter-card">
+          <span>{{ lang.t('level_completion') }}</span>
+          <strong>{{ levelPercent() }}%</strong>
+          <div class="meter">
+            <span [style.width.%]="levelPercent()"></span>
+          </div>
+        </div>
 
-    <div class="module-card">
-      <div class="icon">📚</div>
-      <h3>Грамматика</h3>
-      <p>Правила и упражнения</p>
-      <button class="btn card-btn" [routerLink]="['/levels', levelId, 'grammar', '1']">Учить</button>
-    </div>
+        @if (profile(); as profile) {
+          <div class="meter-card">
+            <span>{{ lang.t('current_streak') }}</span>
+            <strong>{{ profile.user.streak }} {{ lang.t('days') }}</strong>
+          </div>
 
-    <div class="module-card">
-      <div class="icon">🗣️</div>
-      <h3>Shadowing</h3>
-      <p>Практика речи</p>
-      <button class="btn card-btn" [routerLink]="['/levels', levelId, 'shadowing', '1']">Практика</button>
-    </div>
+          <div class="meter-card">
+            <span>{{ lang.t('word_of_day') }}</span>
+            <strong>{{ lang.text(profile.wordOfDay.word) }}</strong>
+            <small>{{ lang.text(profile.wordOfDay.translation) }}</small>
+          </div>
 
-    <div class="module-card">
-      <div class="icon">📝</div>
-      <h3>Чтение и Аудирование</h3>
-      <p>Развитие навыков</p>
-      <button class="btn card-btn" [routerLink]="['/levels', levelId, 'skills', 'reading']">Перейти</button>
-    </div>
-  </div>
+          <div class="meter-card">
+            <span>{{ lang.t('daily_tradition') }}</span>
+            <strong>{{ lang.text(profile.cultureSpotlight.title) }}</strong>
+            <small>{{ lang.text(profile.cultureSpotlight.phrase) }}</small>
+          </div>
+        }
+      </aside>
+    </header>
 
-  <div class="test-section">
-    <h2>Завершение модуля</h2>
-    <p>Проверь свои знания после прохождения всех уроков.</p>
-    <button class="btn primary test-btn" [routerLink]="['/levels', levelId, 'test']">
-      Пройти тест модуля
-    </button>
-  </div>
-</div>
+    <section class="cards-grid">
+      @for (card of cards(); track card.title) {
+        <article class="module-card">
+          <span class="icon">{{ card.icon }}</span>
+          <h2>{{ card.title }}</h2>
+          <p>{{ card.text }}</p>
+          <a class="open-link" [routerLink]="card.route">{{ lang.t('open_module') }}</a>
+        </article>
+      }
+    </section>
+
+    @if (profile(); as profile) {
+      <section class="support-grid">
+        <article class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">{{ lang.t('today') }}</p>
+              <h2>{{ lang.t('daily_tasks') }}</h2>
+            </div>
+            <a routerLink="/profile">{{ lang.t('mission_control') }}</a>
+          </div>
+
+          <div class="task-list">
+            @for (task of profile.dailyTasks; track task.id) {
+              <a class="task-card" [routerLink]="task.route">
+                <span>{{ task.icon }}</span>
+                <div>
+                  <strong>{{ task.title }}</strong>
+                  <small>{{ task.progress }} / {{ task.target }} / {{ task.rewardXp }} XP</small>
+                </div>
+              </a>
+            }
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">{{ lang.t('milestone') }}</p>
+              <h2>{{ lang.t('certificate_status') }}</h2>
+            </div>
+          </div>
+
+          @if (certificateRoute(); as route) {
+            <p class="support-text">{{ lang.t('certificate_unlocked') }}</p>
+            <a class="open-link" [routerLink]="route">{{ lang.t('view_certificate') }}</a>
+          } @else {
+            <p class="support-text">{{ lang.t('unlock_certificate') }}</p>
+            <a class="open-link" [routerLink]="['/levels', levelId(), 'test']">{{ lang.t('take_module_test') }}</a>
+          }
+        </article>
+      </section>
+    }
+  </section>
+}

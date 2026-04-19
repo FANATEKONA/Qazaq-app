@@ -1,29 +1,70 @@
-<div class="test-container">
-  @if (!isFinished) {
-    <div class="question-card">
-      <div class="progress">Вопрос {{ currentQuestion + 1 }} из {{ questions.length }}</div>
-      <h2 class="question-text">{{ questions[currentQuestion].text }}</h2>
+<section class="test-container">
+  @if (!questions.length) {
+    <p>{{ lang.t('loading_diagnostic') }}</p>
+  } @else if (!isFinished && current; as question) {
+    <article class="question-card">
+      <div class="progress">{{ lang.t('diagnostic_label') }} {{ currentQuestion + 1 }} / {{ questions.length }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+      <h2 class="question-text">{{ prompt() }}</h2>
 
-      <div class="options">
-        @for (opt of questions[currentQuestion].options; track $index) {
-          <button class="option-btn" (click)="answer($index)">
-            {{ opt }}
+      @if (helper()) {
+        <p class="helper-text">{{ helper() }}</p>
+      }
+
+      @if (question.options?.length) {
+        <div class="options">
+          @for (opt of question.options; track $index) {
+            <button class="option-btn" type="button" [class.active]="selectedOption === $index" (click)="selectOption($index)">
+              {{ optionLabel(opt) }}
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="text-answer">
+          <textarea [ngModel]="currentAnswer" (ngModelChange)="updateAnswer($event)" [placeholder]="placeholder()"></textarea>
+        </div>
+      }
+
+      @if (question.type === 'listening') {
+        <div class="tool-row">
+          <button class="tool-btn" type="button" (click)="playAudio()">
+            {{ lang.t('play_audio') }} ({{ remainingAudioPlays(question) }} {{ lang.t('plays_left') }})
           </button>
-        }
-      </div>
-    </div>
-  } @else {
-    <div class="result-card">
-      <h2>Тест завершен!</h2>
-      <p>Вы ответили правильно на {{ score }} из {{ questions.length }} вопросов.</p>
+        </div>
+      }
 
-      <div class="level-result">
-        Ваш рекомендуемый уровень: <strong>{{ recommendedLevel | uppercase }}</strong>
-      </div>
+      @if (question.type === 'speaking') {
+        <div class="tool-row">
+          <button class="tool-btn" type="button" (click)="toggleRecording()">
+            {{ isRecording ? lang.t('stop_recording') : lang.t('record_answer') }}
+          </button>
+          <span class="tool-hint">{{ lang.t('attempts_left') }}: {{ remainingSpeakingAttempts(question) }}</span>
+        </div>
+      }
 
-      <button class="btn primary" [routerLink]="['/levels', recommendedLevel]">
-        Перейти к обучению
+      @if (statusMessage) {
+        <p class="helper-text">{{ statusMessage }}</p>
+      }
+
+      <button class="btn primary" type="button" (click)="next()">
+        {{ currentQuestion === questions.length - 1 ? lang.t('finish') : lang.t('next') }}
       </button>
-    </div>
+    </article>
+  } @else {
+    <article class="result-card">
+      <h2>{{ lang.t('diagnostic_complete') }}</h2>
+      <p>{{ lang.t('correct_answers') }}: {{ score }} / {{ questions.length }}</p>
+      <div class="level-result">
+        {{ lang.t('recommended_level') }}: <strong>{{ recommendedLevel | uppercase }}</strong>
+      </div>
+
+      @if (statusMessage) {
+        <p>{{ statusMessage }}</p>
+      }
+
+      <button class="btn primary" [routerLink]="['/levels', recommendedLevel]">{{ lang.t('open_level') }}</button>
+    </article>
   }
-</div>
+</section>

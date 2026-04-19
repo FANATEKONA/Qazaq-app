@@ -1,0 +1,93 @@
+<section class="auth-shell">
+  <div class="auth-copy">
+    <p class="eyebrow">{{ lang.t('auth_identity') }}</p>
+    <h1>{{ title() }}</h1>
+    <p>
+      @if (isRegisterMode()) {
+        {{ lang.t('auth_register_text') }}
+      } @else {
+        {{ lang.t('auth_login_text') }}
+      }
+    </p>
+
+    <div class="copy-points">
+      <span>{{ lang.t('auth_point_daily') }}</span>
+      <span>{{ lang.t('auth_point_word') }}</span>
+      <span>{{ lang.t('auth_point_badges') }}</span>
+    </div>
+  </div>
+
+  <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+    @if (isRegisterMode()) {
+      <label>
+        <span>{{ lang.t('name') }}</span>
+        <input type="text" formControlName="name" [placeholder]="lang.t('your_name')" />
+      </label>
+    }
+
+    <label>
+      <span>{{ lang.t('email_label') }}</span>
+      <input type="email" formControlName="email" placeholder="name@example.com" />
+    </label>
+
+    <label>
+      <span>{{ lang.t('password_label') }}</span>
+      <input type="password" formControlName="password" [placeholder]="lang.t('password_hint')" />
+    </label>
+
+    @if (isRegisterMode()) {
+      <div class="picker-block">
+        <span class="picker-label">{{ lang.t('role') }}</span>
+        <div class="role-grid">
+          @for (role of roleCards(); track role.id) {
+            <button
+              class="role-card"
+              type="button"
+              [class.active]="form.controls.role.value === role.id"
+              (click)="form.controls.role.setValue(role.id)">
+              <strong>{{ role.title }}</strong>
+              <small>{{ role.desc }}</small>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="picker-block">
+        <span class="picker-label">{{ lang.t('avatar') }}</span>
+        <div class="avatar-grid">
+          @for (avatar of avatarChoices(); track avatar) {
+            <button
+              class="avatar-option"
+              type="button"
+              [class.active]="form.controls.avatar.value === avatar"
+              (click)="form.controls.avatar.setValue(avatar)">
+              {{ avatar }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <p class="status error">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p class="status success">{{ successMessage() }}</p>
+    }
+
+    <button class="submit-btn" type="submit" [disabled]="auth.loading()">
+      {{ auth.loading() ? lang.t('please_wait') : submitLabel() }}
+    </button>
+
+    <p class="switch-link">
+      @if (isRegisterMode()) {
+        {{ lang.t('already_have_account') }}
+        <a routerLink="/login">{{ lang.t('sign_in') }}</a>
+      } @else {
+        {{ lang.t('need_account') }}
+        <a routerLink="/register">{{ lang.t('register') }}</a>
+      }
+    </p>
+  </form>
+</section>

@@ -1,20 +1,48 @@
-<nav class="navbar">
-  <div class="logo">
-    <a routerLink="/home">QazaqApp</a>
-  </div>
-  <ul class="nav-links">
-    <li>
-      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-    </li>
-    <li>
-      <a routerLink="/levels" routerLinkActive="active">Levels</a>
-    </li>
-    <li>
-      <a routerLink="/profile" routerLinkActive="active">Profile</a>
-    </li>
-  </ul>
-</nav>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/home">
+      <span class="brand-mark">Q</span>
+      <div>
+        <strong>QazaqApp</strong>
+        <small>{{ lang.t('brand_subtitle') }}</small>
+      </div>
+    </a>
 
-<main class="content">
-  <router-outlet></router-outlet>
-</main>
+    <nav class="nav-links">
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{ lang.t('home') }}</a>
+      <a routerLink="/levels" routerLinkActive="active">{{ lang.t('levels') }}</a>
+      <a routerLink="/leaderboard" routerLinkActive="active">{{ lang.t('leaderboard') }}</a>
+      @if (auth.user(); as user) {
+        <a [routerLink]="['/levels', user.currentLevel, 'arcade']" routerLinkActive="active">{{ lang.t('arcade') }}</a>
+      }
+    </nav>
+
+    <div class="topbar-actions">
+      <div class="lang-switcher" [attr.aria-label]="lang.t('language')">
+        @for (option of languageOptions; track option.id) {
+          <button class="lang-chip" type="button" [class.active]="lang.lang() === option.id" (click)="lang.setLanguage(option.id)">
+            {{ option.label }}
+          </button>
+        }
+      </div>
+
+      @if (auth.user(); as user) {
+        <a class="profile-pill" routerLink="/profile">
+          <span class="avatar">{{ user.avatar }}</span>
+          <div>
+            <strong>{{ user.name }}</strong>
+            <small>{{ user.rankTitle }} / {{ user.xp }} XP</small>
+          </div>
+        </a>
+        <button class="ghost-btn" type="button" (click)="logout()">{{ lang.t('log_out') }}</button>
+      } @else {
+        <a class="ghost-link" routerLink="/login">{{ lang.t('sign_in') }}</a>
+        <a class="solid-link" routerLink="/register">{{ lang.t('register') }}</a>
+      }
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <router-outlet></router-outlet>
+  </main>
+</div>

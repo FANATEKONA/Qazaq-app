@@ -1,8 +1,82 @@
-/* src/styles.css */
-body, html {
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+  --ink: #123d3c;
+  --muted: #5f6764;
+  --sand: #fff8f0;
+  --panel: rgba(255, 251, 243, 0.84);
+  --line: rgba(18, 61, 60, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa; /* Единый светло-серый фон для всего сайта */
-  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(255, 219, 142, 0.35), transparent 26%),
+    radial-gradient(circle at right 30%, rgba(18, 61, 60, 0.08), transparent 25%),
+    linear-gradient(180deg, #f7f1e8 0%, #fcf9f4 35%, #f7f0e7 100%);
+}
+
+a,
+button,
+input,
+select {
+  font: inherit;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(18, 61, 60, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+  color: #123d3c;
+  resize: vertical;
+}
+
+.solid-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.1rem;
+  font-weight: 700;
+  background: #123d3c;
+  color: #fff8f0;
+  cursor: pointer;
+}
+
+.solid-btn.compact {
+  width: fit-content;
+  padding-inline: 0.95rem;
+}
+
+.solid-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.status-pill {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(182, 92, 52, 0.12);
+  color: #b65c34;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-pill.complete {
+  background: rgba(20, 91, 76, 0.12);
+  color: #145b4c;
 }

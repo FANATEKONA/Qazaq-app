@@ -1,86 +1,543 @@
-<div class="profile-layout">
-
-  <aside class="profile-sidebar">
-    <div class="user-card">
-      <div class="avatar">{{ user.avatar }}</div>
-      <h2 class="user-name">{{ user.name }}</h2>
-      <p class="user-role">{{ user.role }}</p>
-
-      <div class="user-badges">
-        <div class="badge-item">
-          <span class="badge-icon">🎯</span>
-          <div class="badge-info">
-            <span class="badge-value">Уровень {{ user.currentLevel }}</span>
-            <span class="badge-label">Текущая цель</span>
+@if (profile(); as profile) {
+  <section class="profile-shell">
+    <section class="hero-grid">
+      <article class="identity-card">
+        <div class="identity-top">
+          <div class="avatar-frame">{{ profile.user.avatar }}</div>
+          <div>
+            <p class="eyebrow">{{ roleLabel(profile.user.role) }}</p>
+            <h1>{{ profile.user.name }}</h1>
+            <p class="muted">{{ profile.user.email }}</p>
           </div>
         </div>
-        <div class="badge-item">
-          <span class="badge-icon">🔥</span>
-          <div class="badge-info">
-            <span class="badge-value">{{ user.streak }} дней</span>
-            <span class="badge-label">Ударный режим</span>
+
+        <div class="identity-metrics">
+          <div>
+            <span>{{ lang.t('rank') }}</span>
+            <strong>{{ rankTitle(profile.user.role, profile.user.xpLevel) }}</strong>
+          </div>
+          <div>
+            <span>{{ lang.t('crown') }}</span>
+            <strong>{{ crownTitle(profile.user.totalPoints) }}</strong>
+          </div>
+          <div>
+            <span>XP</span>
+            <strong>{{ profile.user.xp }}</strong>
+          </div>
+          <div>
+            <span>{{ lang.t('streak') }}</span>
+            <strong>{{ profile.user.streak }} {{ lang.t('days') }}</strong>
           </div>
         </div>
-        <div class="badge-item">
-          <span class="badge-icon">⭐</span>
-          <div class="badge-info">
-            <span class="badge-value">{{ user.totalPoints }}</span>
-            <span class="badge-label">Очков опыта</span>
-          </div>
+
+        <div class="badge-row">
+          @for (badge of profile.badges; track badge.id) {
+            <span class="badge-pill" [class]="badgeClass(badge)">
+              <span>{{ badge.icon }}</span>
+              {{ badgeLabel(badge, profile) }}
+            </span>
+          }
         </div>
-      </div>
 
-      <button class="btn primary full-width" [routerLink]="['/levels']">Продолжить обучение</button>
-    </div>
-  </aside>
+        <div class="action-row">
+          <a class="primary-link" [routerLink]="profile.resume?.route ?? '/levels'">
+            {{ profile.resume?.title ?? lang.t('open_learning_path') }}
+          </a>
+          <a class="secondary-link" routerLink="/leaderboard">{{ lang.t('leaderboard') }}</a>
+        </div>
+      </article>
 
-  <main class="profile-content">
+      <article class="ring-panel">
+        <div class="ring-card">
+          <div class="ring" [style.background]="ringStyle(xpProgressPercent(), '#b65c34')">
+            <div class="ring-core">{{ profile.user.xpLevel }}</div>
+          </div>
+          <strong>{{ lang.t('xp_level') }}</strong>
+          <small>{{ profile.user.xp }} / {{ profile.nextLevelXp }} XP</small>
+        </div>
 
-    <div class="content-card">
-      <div class="card-header">
-        <h3>Прогресс модуля {{ user.currentLevel }}</h3>
-      </div>
+        <div class="ring-card">
+          <div class="ring" [style.background]="ringStyle(profile.overallProgress, '#123d3c')">
+            <div class="ring-core">{{ profile.overallProgress }}%</div>
+          </div>
+          <strong>{{ lang.t('overall_progress') }}</strong>
+          <small>{{ lang.t('all_content') }}</small>
+        </div>
 
-      <div class="stats-grid">
-        @for (stat of stats; track stat.label) {
-          <div class="stat-item">
-            <div class="stat-header">
-              <span class="stat-label">{{ stat.label }}</span>
-              <span class="stat-numbers">{{ stat.value }} / {{ stat.total }}</span>
+        <div class="ring-card">
+          <div class="ring" [style.background]="ringStyle(profile.weeklyChallenge.daysCompleted * 14.2, '#145b4c')">
+            <div class="ring-core">{{ profile.weeklyChallenge.daysCompleted }}/7</div>
+          </div>
+          <strong>{{ lang.t('weekly_challenge') }}</strong>
+          <small>{{ profile.weeklyChallenge.rewardXp }} XP</small>
+        </div>
+      </article>
+
+      <article class="role-card">
+        <p class="eyebrow">{{ lang.t('role_hub') }}</p>
+        <h2>{{ roleHubTitle(profile) }}</h2>
+        <div class="role-grid">
+          @for (card of profile.roleHub.cards; track card.id) {
+            <div class="role-metric">
+              <span>{{ roleHubCardTitle(card.id, profile.user.role) }}</span>
+              <strong>{{ card.value }}</strong>
+              <small>{{ roleHubCardSubtitle(card.id, profile.user.role) }}</small>
             </div>
-            <div class="progress-bar">
-              <div class="progress-fill"
-                   [style.width.%]="getPercent(stat.value, stat.total)"
-                   [style.background-color]="stat.color">
+          }
+        </div>
+
+        <ul class="highlight-list">
+          @for (highlight of roleHubHighlights(profile); track highlight) {
+            <li>{{ highlight }}</li>
+          }
+        </ul>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('current_level') }}</p>
+            <h2>{{ currentLevelTitle(profile.user.currentLevel) }}</h2>
+          </div>
+        </div>
+
+        <div class="stat-list">
+          @for (stat of profile.currentLevelProgress; track stat.key) {
+            <div class="stat-row">
+              <div class="stat-head">
+                <strong>{{ progressLabel(stat.key) }}</strong>
+                <span>{{ stat.value }} / {{ stat.total }}</span>
+              </div>
+              <div class="progress-line">
+                <span [style.width.%]="stat.percent" [style.background]="stat.color"></span>
               </div>
             </div>
+          }
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('today') }}</p>
+            <h2>{{ lang.t('daily_tasks') }}</h2>
           </div>
+        </div>
+
+        <div class="task-stack">
+          @for (task of profile.dailyTasks; track task.id) {
+            <a class="task-card" [routerLink]="task.route">
+              <div class="task-meta">
+                <span class="task-icon">{{ task.icon }}</span>
+                <div>
+                  <strong>{{ dailyTaskTitle(task.id) }}</strong>
+                  <small>{{ dailyTaskDescription(task.id) }}</small>
+                </div>
+              </div>
+              <div class="task-progress">
+                <span>{{ task.progress }} / {{ task.target }} / {{ task.rewardXp }} XP</span>
+                <div class="progress-line">
+                  <span [style.width.%]="taskPercent(task)"></span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('consistency') }}</p>
+            <h2>{{ lang.t('study_series') }}</h2>
+          </div>
+          <span class="reward-pill">{{ profile.weeklyChallenge.rewardXp }} XP</span>
+        </div>
+
+        <div class="series-grid">
+          @for (day of profile.studySeries; track day.date) {
+            <div class="series-day" [class.active]="day.active">
+              <strong>{{ studyDayLabel(day.date) }}</strong>
+              <span>{{ day.completedUnits }} {{ lang.t('acts') }}</span>
+            </div>
+          }
+        </div>
+
+        <p class="support-copy">{{ weeklyChallengeDescription() }}</p>
+      </article>
+
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('word_of_day') }}</p>
+            <h2>{{ lang.t('word_of_day') }}</h2>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <strong>{{ text(profile.wordOfDay.word) }}</strong>
+          <span>{{ text(profile.wordOfDay.translation) }}</span>
+          <p>{{ text(profile.wordOfDay.example) }}</p>
+          <small>{{ text(profile.wordOfDay.tip) }}</small>
+        </div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('culture_focus') }}</p>
+            <h2>{{ lang.t('daily_tradition') }}</h2>
+          </div>
+        </div>
+
+        <div class="word-card">
+          <strong>{{ text(profile.cultureSpotlight.title) }}</strong>
+          <span>{{ text(profile.cultureSpotlight.phrase) }}</span>
+          <p>{{ text(profile.cultureSpotlight.summary) }}</p>
+          <small>{{ text(profile.cultureSpotlight.practiceTip) }}</small>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('strong_side') }}</p>
+            <h2>{{ lang.t('top_skills') }}</h2>
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          @for (skill of profile.strongSkills; track skill.id) {
+            <div class="insight-card strong">
+              <span>{{ skill.icon }}</span>
+              <strong>{{ skillLabel(skill.id) }}</strong>
+              <p>{{ skillDescription(skill.id) }}</p>
+              <small>{{ skill.score }}/100</small>
+            </div>
+          }
+        </div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('growth_zone') }}</p>
+            <h2>{{ lang.t('weak_skills') }}</h2>
+          </div>
+        </div>
+
+        <div class="insight-grid">
+          @for (skill of profile.weakSkills; track skill.id) {
+            <div class="insight-card weak">
+              <span>{{ skill.icon }}</span>
+              <strong>{{ skillLabel(skill.id) }}</strong>
+              <p>{{ skillDescription(skill.id) }}</p>
+              <small>{{ skill.score }}/100</small>
+            </div>
+          }
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('social_proof') }}</p>
+            <h2>{{ lang.t('leaderboard') }}</h2>
+          </div>
+          <a routerLink="/leaderboard">{{ lang.t('full_ranking') }}</a>
+        </div>
+
+        <div class="leaderboard-list">
+          @for (entry of profile.leaderboard; track entry.userId) {
+            <div [class]="leaderboardClass(entry)">
+              <div class="leader-person">
+                <span class="leader-rank">#{{ entry.rank }}</span>
+                <span class="leader-avatar">{{ entry.avatar }}</span>
+                <div>
+                  <strong>{{ entry.name }}</strong>
+                  <small>{{ roleLabel(entry.role) }} / {{ crownTitle(entry.totalPoints) }}</small>
+                </div>
+              </div>
+              <span class="leader-score">{{ entry.totalPoints }} pts</span>
+            </div>
+          }
+        </div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('milestones') }}</p>
+            <h2>{{ lang.t('certificates') }}</h2>
+          </div>
+        </div>
+
+        @if (profile.certificates.length) {
+          <div class="certificate-list">
+            @for (certificate of profile.certificates; track certificate.id) {
+              <a class="certificate-card" [routerLink]="certificate.route">
+                <strong>{{ certificate.levelId | uppercase }}</strong>
+                <span>{{ certificate.grade }}</span>
+                <small>{{ certificate.issuedAt.slice(0, 10) }}</small>
+              </a>
+            }
+          </div>
+        } @else {
+          <p class="support-copy">{{ lang.t('certificates_hint') }}</p>
+        }
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">{{ lang.t('achievement_wall') }}</p>
+          <h2>{{ lang.t('badges_and_achievements') }}</h2>
+        </div>
+      </div>
+
+      <div class="achievement-grid">
+        @for (ach of profile.achievements; track ach.id) {
+          <article class="achievement-card" [class.locked]="!ach.unlocked">
+            <span class="achievement-icon">{{ ach.icon }}</span>
+            <div>
+              <strong>{{ achievementTitle(ach.id) }}</strong>
+              <p>{{ achievementDescription(ach.id) }}</p>
+              <small>{{ ach.progress }} / {{ ach.target }}</small>
+            </div>
+          </article>
         }
       </div>
-    </div>
+    </section>
 
-    <div class="content-card">
-      <div class="card-header">
-        <h3>Достижения</h3>
-      </div>
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('teacher_link') }}</p>
+            <h2>{{ lang.t('teacher_assignment') }}</h2>
+          </div>
+        </div>
 
-      <div class="achievements-grid">
-        @for (ach of achievements; track ach.title) {
-          <div class="achievement-card" [class.locked]="!ach.unlocked">
-            <div class="ach-icon">{{ ach.icon }}</div>
-            <div class="ach-info">
-              <h4>{{ ach.title }}</h4>
-              <p>{{ ach.desc }}</p>
+        @if (actionMessage()) {
+          <p class="support-copy status-copy">{{ actionMessage() }}</p>
+        }
+
+        @if (profile.user.role === 'student') {
+          @if (profile.teacherAssignment; as assignment) {
+            <div class="teacher-card">
+              <div class="teacher-identity">
+                <span class="teacher-avatar">{{ assignment.teacher.avatar }}</span>
+                <div>
+                  <strong>{{ assignment.teacher.name }}</strong>
+                  <small>{{ assignment.teacher.studentCount }} {{ lang.t('students_count') }}</small>
+                </div>
+              </div>
+
+              <div class="quota-grid">
+                <div class="quota-card">
+                  <span>{{ lang.t('weekly_limit') }}</span>
+                  <strong>{{ profile.botQuota.weeklyLimit }}</strong>
+                </div>
+                <div class="quota-card">
+                  <span>{{ lang.t('used') }}</span>
+                  <strong>{{ profile.botQuota.teacherChangeRequestsUsed }}</strong>
+                </div>
+                <div class="quota-card">
+                  <span>{{ lang.t('remaining') }}</span>
+                  <strong>{{ profile.botQuota.teacherChangeRequestsRemaining }}</strong>
+                </div>
+              </div>
+
+              @if (profile.teacherDirectory.length > 1 && assignment.canRequestChange) {
+                <div class="form-stack">
+                  <label class="form-field">
+                    <span>{{ lang.t('request_another_teacher') }}</span>
+                    <select [ngModel]="requestedTeacherId()" (ngModelChange)="requestedTeacherId.set($event)">
+                      @for (teacher of profile.teacherDirectory; track teacher.id) {
+                        @if (teacher.id !== assignment.teacher.id) {
+                          <option [value]="teacher.id">{{ teacher.name }}</option>
+                        }
+                      }
+                    </select>
+                  </label>
+
+                  <label class="form-field">
+                    <span>{{ lang.t('change_reason') }}</span>
+                    <textarea
+                      rows="3"
+                      [ngModel]="teacherChangeMessage()"
+                      (ngModelChange)="teacherChangeMessage.set($event)"
+                      [placeholder]="lang.t('bot_placeholder')"></textarea>
+                  </label>
+
+                  <button class="solid-btn" type="button" [disabled]="profile.botQuota.teacherChangeRequestsRemaining <= 0" (click)="requestTeacherChange()">
+                    {{ lang.t('send_change_request') }}
+                  </button>
+                </div>
+              }
             </div>
-            @if (ach.unlocked) {
-              <div class="ach-status">✅</div>
+          } @else {
+            <div class="form-stack">
+              <p class="support-copy">{{ lang.t('choose_teacher_hint') }}</p>
+              <label class="form-field">
+                <span>{{ lang.t('choose_your_teacher') }}</span>
+                <select [ngModel]="selectedTeacherId()" (ngModelChange)="selectedTeacherId.set($event)">
+                  @for (teacher of profile.teacherDirectory; track teacher.id) {
+                    <option [value]="teacher.id">{{ teacher.name }} / {{ teacher.studentCount }} {{ lang.t('students_count') }}</option>
+                  }
+                </select>
+              </label>
+              <button class="solid-btn" type="button" [disabled]="!selectedTeacherId()" (click)="assignTeacher()">
+                {{ lang.t('confirm_teacher') }}
+              </button>
+            </div>
+          }
+        } @else {
+          <div class="teacher-student-list">
+            @if (profile.teacherStudents.length) {
+              @for (student of profile.teacherStudents; track student.id) {
+                <article class="student-card">
+                  <div class="teacher-identity">
+                    <span class="teacher-avatar">{{ student.avatar }}</span>
+                    <div>
+                      <strong>{{ student.name }}</strong>
+                      <small>{{ student.currentLevel | uppercase }} / {{ student.streak }} {{ lang.t('days') }}</small>
+                    </div>
+                  </div>
+                </article>
+              }
             } @else {
-              <div class="ach-status locked-icon">🔒</div>
+              <p class="support-copy">{{ lang.t('students_will_appear') }}</p>
             }
           </div>
         }
-      </div>
-    </div>
+      </article>
 
-  </main>
-</div>
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('bot_center') }}</p>
+            <h2>{{ lang.t('feedback_ideas') }}</h2>
+          </div>
+        </div>
+
+        <div class="form-stack">
+          <p class="support-copy">{{ lang.t('unlimited_feedback') }}</p>
+          <label class="form-field">
+            <span>{{ lang.t('your_feedback') }}</span>
+            <textarea rows="5" [ngModel]="feedbackMessage()" (ngModelChange)="feedbackMessage.set($event)" [placeholder]="lang.t('improve_placeholder')"></textarea>
+          </label>
+          <button class="solid-btn" type="button" [disabled]="!feedbackMessage().trim()" (click)="submitFeedback()">
+            {{ lang.t('send_feedback') }}
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ lang.t('assignments') }}</p>
+            <h2>{{ profile.user.role === 'teacher' ? lang.t('create_tasks_for_students') : lang.t('tasks_from_teacher') }}</h2>
+          </div>
+        </div>
+
+        @if (profile.user.role === 'teacher') {
+          <div class="form-stack">
+            <label class="form-field">
+              <span>{{ lang.t('student') }}</span>
+              <select [ngModel]="taskStudentId()" (ngModelChange)="taskStudentId.set($event)">
+                @for (student of profile.teacherStudents; track student.id) {
+                  <option [value]="student.id">{{ student.name }} / {{ student.currentLevel | uppercase }}</option>
+                }
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span>{{ lang.t('task_title') }}</span>
+              <input type="text" [ngModel]="taskTitle()" (ngModelChange)="taskTitle.set($event)" />
+            </label>
+
+            <label class="form-field">
+              <span>{{ lang.t('description') }}</span>
+              <textarea rows="4" [ngModel]="taskDescription()" (ngModelChange)="taskDescription.set($event)"></textarea>
+            </label>
+
+            <label class="form-field">
+              <span>{{ lang.t('due_date') }}</span>
+              <input type="date" [min]="minDueDate()" [ngModel]="taskDueDate()" (ngModelChange)="taskDueDate.set($event)" />
+            </label>
+
+            <button class="solid-btn" type="button" [disabled]="!profile.teacherStudents.length || !taskStudentId() || !taskTitle().trim() || !taskDescription().trim()" (click)="createTeacherTask()">
+              {{ lang.t('create_task') }}
+            </button>
+          </div>
+
+          <div class="task-feed">
+            @if (profile.teacherIssuedTasks.length) {
+              @for (task of profile.teacherIssuedTasks; track task.id) {
+                <article class="teacher-task-card">
+                  <div class="task-headline">
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-pill" [class.complete]="task.completed">
+                      {{ task.completed ? lang.t('completed_status') : lang.t('open_status') }}
+                    </span>
+                  </div>
+                  <p>{{ task.description }}</p>
+                  <small>{{ task.studentName }} / {{ task.dueDate ?? lang.t('no_due_date') }}</small>
+                </article>
+              }
+            } @else {
+              <p class="support-copy">{{ lang.t('no_teacher_tasks') }}</p>
+            }
+          </div>
+        } @else {
+          <div class="task-feed">
+            @if (profile.studentTasks.length) {
+              @for (task of profile.studentTasks; track task.id) {
+                <article class="teacher-task-card">
+                  <div class="task-headline">
+                    <strong>{{ task.title }}</strong>
+                    <span class="status-pill" [class.complete]="task.completed">
+                      {{ task.completed ? lang.t('completed_status') : lang.t('open_status') }}
+                    </span>
+                  </div>
+                  <p>{{ task.description }}</p>
+                  <small>{{ task.teacherName }} / {{ task.dueDate ?? lang.t('no_due_date') }}</small>
+                  @if (!task.completed) {
+                    <button class="solid-btn compact" type="button" (click)="completeStudentTask(task.id)">
+                      {{ lang.t('mark_complete') }}
+                    </button>
+                  }
+                </article>
+              }
+            } @else {
+              <p class="support-copy">{{ lang.t('student_tasks_appear') }}</p>
+            }
+          </div>
+        }
+      </article>
+    </section>
+  </section>
+} @else {
+  <section class="profile-shell">
+    <article class="panel empty-card">
+      <p class="eyebrow">{{ lang.t('private_hub') }}</p>
+      <h1>{{ lang.t('sign_in_profile') }}</h1>
+      <p class="support-copy">{{ lang.t('profile_login_hint') }}</p>
+      <a class="primary-link" routerLink="/login">{{ lang.t('open_login') }}</a>
+    </article>
+  </section>
+}

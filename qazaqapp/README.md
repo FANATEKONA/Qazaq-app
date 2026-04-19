@@ -2,6 +2,34 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
 
+## Backend features
+
+The project now includes a built-in backend inside `src/server.ts` with persistent file storage in `data/qazaq-db.json`.
+
+Implemented:
+
+- registration, login, logout and cookie-based sessions
+- protected profile API
+- persistence of current level and current lesson/topic/activity
+- saving of diagnostic test results
+- saving of video, grammar, shadowing, reading/listening and module test progress
+- automatic profile aggregation, streak, points and achievements
+
+Main API routes:
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+- `GET /api/profile`
+- `POST /api/progress/checkpoint`
+- `POST /api/progress/diagnostic`
+- `POST /api/progress/video`
+- `POST /api/progress/grammar`
+- `POST /api/progress/shadowing`
+- `POST /api/progress/skills`
+- `POST /api/progress/module-test`
+
 ## Development server
 
 To start a local development server, run:
@@ -11,6 +39,13 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+For the SSR build with the integrated backend:
+
+```bash
+npm run build
+node dist/qazaqapp/server/server.mjs
+```
 
 ## Code scaffolding
 

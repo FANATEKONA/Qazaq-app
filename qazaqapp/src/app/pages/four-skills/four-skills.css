@@ -1,55 +1,216 @@
-.lesson-layout { display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; align-items: flex-start; }
+:host { display: block; }
 
-/* Сайдбар */
-.sidebar { width: 350px; background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); flex-shrink: 0; }
-.back-btn { background: none; border: none; color: #7f8c8d; font-size: 1rem; cursor: pointer; padding: 0; margin-bottom: 1.5rem; }
-.back-btn:hover { color: #3498db; }
-.sidebar h3 { margin-top: 0; margin-bottom: 1rem; color: #2c3e50; }
-.lesson-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.lesson-link { display: flex; padding: 1rem; text-decoration: none; color: #2c3e50; background-color: #f8f9fa; border-radius: 8px; transition: all 0.2s; }
-.lesson-link:hover { background-color: #f1f9ff; }
-.lesson-link.active { background-color: #e1f0fa; border-color: #3498db; font-weight: bold; color: #2980b9; }
+.lesson-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items: start;
+}
 
-/* Контент */
-.content-area { flex-grow: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+.sidebar,
+.skill-header,
+.reading-box,
+.audio-box,
+.quiz-section {
+  border-radius: 28px;
+  border: 1px solid rgba(18, 61, 60, 0.08);
+  background: rgba(255, 251, 243, 0.9);
+  box-shadow: 0 18px 55px rgba(18, 61, 60, 0.08);
+}
 
-.skill-header { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-.badge { color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
-.reading-badge { background-color: #27ae60; }
-.listening-badge { background-color: #8e44ad; }
-.skill-header h2 { margin: 1rem 0 0; color: #1a252f; font-size: 2rem; }
+.sidebar,
+.skill-header,
+.reading-box,
+.audio-box,
+.quiz-section {
+  padding: 1.5rem;
+}
 
-/* Чтение */
-.reading-box { background: white; padding: 2rem; border-radius: 12px; border-left: 5px solid #27ae60; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-.reading-text { font-size: 1.3rem; line-height: 1.8; color: #2c3e50; margin: 0; }
+.sidebar h3,
+.skill-header h2,
+.quiz-section h3 {
+  margin: 0;
+  color: #123d3c;
+}
 
-/* Аудирование */
-.audio-box { background: white; padding: 2rem; border-radius: 12px; border-left: 5px solid #8e44ad; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-.instruction { color: #7f8c8d; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; }
-.audio-player { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
-.play-btn { background: #8e44ad; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-.play-btn:hover { background: #732d91; transform: scale(1.05); }
-.progress-track { flex-grow: 1; height: 8px; background: #ecf0f1; border-radius: 4px; overflow: hidden; position: relative; }
-.progress-fill { width: 0%; height: 100%; background: #8e44ad; }
-.progress-fill.playing { animation: play-progress 5s linear forwards; }
-@keyframes play-progress { 0% { width: 0%; } 100% { width: 100%; } }
+.back-btn {
+  display: inline-flex;
+  margin-bottom: 1.25rem;
+  color: #123d3c;
+  text-decoration: none;
+  font-weight: 700;
+}
 
-.toggle-transcript-btn { background: none; border: 1px dashed #bdc3c7; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; color: #7f8c8d; font-weight: bold; }
-.toggle-transcript-btn:hover { background: #f8f9fa; border-color: #8e44ad; color: #8e44ad; }
-.transcript-box { margin-top: 1.5rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; color: #2c3e50; font-size: 1.2rem; line-height: 1.6; }
+.lesson-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
 
-/* Викторина */
-.quiz-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
-.quiz-section h3 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 1rem; }
-.questions-list { display: flex; flex-direction: column; gap: 1.5rem; }
-.question-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border: 1px solid #e0e0e0; }
-.question-text { font-size: 1.1rem; font-weight: bold; color: #2c3e50; margin-top: 0; }
-.options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+.lesson-link {
+  display: block;
+  padding: 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #123d3c;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(18, 61, 60, 0.08);
+}
 
-.option-btn { background: white; border: 2px solid #bdc3c7; padding: 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; color: #2c3e50; }
-.option-btn:hover:not([disabled]) { border-color: #3498db; background: #f1f9ff; }
-.option-btn[disabled] { cursor: not-allowed; opacity: 0.8; }
+.lesson-link.active {
+  background: rgba(20, 91, 76, 0.1);
+  border-color: rgba(20, 91, 76, 0.22);
+  font-weight: 800;
+}
 
-/* Цвета правильных и неправильных ответов */
-.option-btn.correct { background-color: #27ae60; color: white; border-color: #27ae60; }
-.option-btn.wrong { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+.content-area {
+  display: grid;
+  gap: 1rem;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  color: #fff8f0;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.reading-badge { background: #1f8f62; }
+.listening-badge { background: #7a4cb4; }
+
+.skill-header h2 {
+  margin-top: 0.9rem;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.reading-text,
+.instruction,
+.transcript-box p,
+.save-message {
+  margin: 0;
+  color: #5f6764;
+  line-height: 1.7;
+}
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.play-btn {
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  background: #123d3c;
+  color: #fff8f0;
+  cursor: pointer;
+}
+
+.progress-track {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(18, 61, 60, 0.08);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #123d3c, #1f6662);
+}
+
+.progress-fill.playing {
+  animation: skill-progress 5s linear forwards;
+}
+
+@keyframes skill-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.toggle-transcript-btn {
+  border: 1px solid rgba(18, 61, 60, 0.14);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.82);
+  color: #123d3c;
+  cursor: pointer;
+}
+
+.transcript-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.questions-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.question-card {
+  padding: 1.2rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(18, 61, 60, 0.08);
+}
+
+.question-text {
+  margin: 0 0 0.9rem;
+  color: #123d3c;
+  font-weight: 700;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+}
+
+.option-btn {
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(18, 61, 60, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  color: #123d3c;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.option-btn.selected {
+  border-color: #123d3c;
+  box-shadow: 0 0 0 3px rgba(18, 61, 60, 0.12);
+}
+
+.option-btn.correct {
+  background: rgba(31, 143, 98, 0.16);
+  border-color: #1f8f62;
+}
+
+.option-btn.wrong {
+  background: rgba(182, 92, 52, 0.14);
+  border-color: #b65c34;
+}
+
+.save-message {
+  margin-top: 1rem;
+}
+
+@media (max-width: 920px) {
+  .lesson-layout {
+    grid-template-columns: 1fr;
+  }
+}

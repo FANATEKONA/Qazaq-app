@@ -1,0 +1,55 @@
+<section class="certificate-shell">
+  @if (profile(); as profile) {
+    @if (certificate(); as certificate) {
+      <article class="certificate-card">
+        <div class="frame">
+          <p class="eyebrow">{{ lang.t('verified_certificate') }}</p>
+          <h1>{{ lang.t('certificate_title') }}</h1>
+          <p class="subtitle">{{ lang.t('awarded_for_level') }} {{ certificate.levelId | uppercase }}</p>
+
+          <div class="recipient">
+            <span class="recipient-label">{{ lang.t('presented_to') }}</span>
+            <strong>{{ profile.user.name }}</strong>
+            <span>{{ profile.user.rankTitle }} / {{ profile.user.crown }}</span>
+          </div>
+
+          <div class="certificate-meta">
+            <div>
+              <span>{{ lang.t('levels') }}</span>
+              <strong>{{ certificate.levelId | uppercase }}</strong>
+            </div>
+            <div>
+              <span>{{ lang.t('certificate') }}</span>
+              <strong>{{ certificate.grade }}</strong>
+            </div>
+            <div>
+              <span>{{ lang.t('issued') }}</span>
+              <strong>{{ certificate.issuedAt.slice(0, 10) }}</strong>
+            </div>
+          </div>
+
+          <p class="statement">{{ lang.t('certificate_statement') }}</p>
+
+          <div class="actions">
+            <button type="button" class="print-btn" (click)="printCertificate()">{{ lang.t('print_save_pdf') }}</button>
+            <a routerLink="/profile" class="secondary-link">{{ lang.t('back_to_profile') }}</a>
+          </div>
+        </div>
+      </article>
+    } @else {
+      <article class="locked-card">
+        <p class="eyebrow">{{ lang.t('certificate_locked') }}</p>
+        <h1>{{ levelId() | uppercase }} {{ lang.t('certificate_not_unlocked') }}</h1>
+        <p>{{ lang.t('pass_module_for_certificate') }}</p>
+        <a routerLink="/levels" class="secondary-link">{{ lang.t('go_to_levels') }}</a>
+      </article>
+    }
+  } @else {
+    <article class="locked-card">
+      <p class="eyebrow">{{ lang.t('profile_required') }}</p>
+      <h1>{{ lang.t('sign_in_certificates') }}</h1>
+      <p>{{ lang.t('certificates_tied') }}</p>
+      <a routerLink="/login" class="secondary-link">{{ lang.t('open_login') }}</a>
+    </article>
+  }
+</section>

@@ -1,12 +1,47 @@
-<div class="levels-container">
-  <h2>Выберите ваш уровень</h2>
+<section class="levels-shell">
+  <header class="levels-hero">
+    <div>
+      <p class="eyebrow">{{ lang.t('structured_learning_path') }}</p>
+      <h1>{{ lang.t('choose_level') }}</h1>
+      <p>{{ lang.t('levels_intro') }}</p>
+    </div>
+    <a class="hero-link" routerLink="/diagnostic">{{ lang.t('run_diagnostic') }}</a>
+  </header>
 
   <div class="levels-grid">
-    @for (level of levelsList; track level.id) {
-      <div class="level-card" [routerLink]="['/levels', level.id]">
-        <h3>{{ level.name }}</h3>
-        <p>{{ level.desc }}</p>
-      </div>
+    @for (level of levelsList(); track level.id) {
+      <article class="level-card">
+        <div class="card-top">
+          <span class="order">0{{ level.order }}</span>
+          <div class="chips">
+            @if (isCurrent(level.id)) {
+              <span class="chip active">{{ lang.t('current') }}</span>
+            }
+            @if (isRecommended(level.id)) {
+              <span class="chip accent">{{ lang.t('recommended') }}</span>
+            }
+            @if (hasCertificate(level.id)) {
+              <span class="chip gold">{{ lang.t('certified') }}</span>
+            }
+          </div>
+        </div>
+
+        <h2>{{ levelName(level) }}</h2>
+        <p>{{ levelDesc(level) }}</p>
+        <small>{{ levelGoal(level) }}</small>
+
+        <div class="progress-block">
+          <div class="progress-head">
+            <span>{{ lang.t('completion') }}</span>
+            <strong>{{ progressFor(level.id) }}%</strong>
+          </div>
+          <div class="progress-bar">
+            <span [style.width.%]="progressFor(level.id)"></span>
+          </div>
+        </div>
+
+        <a class="open-link" [routerLink]="['/levels', level.id]">{{ lang.t('open_level') }}</a>
+      </article>
     }
   </div>
-</div>
+</section>

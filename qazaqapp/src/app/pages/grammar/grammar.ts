@@ -1,183 +1,282 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, ParamMap, RouterLink, RouterLinkActive } from '@angular/router';
+
+import { AuthService } from '../../core/services/auth.service';
+import { CatalogService } from '../../core/services/catalog.service';
+import { LanguageService } from '../../core/services/language.service';
+import { ProfileService } from '../../core/services/profile.service';
+import { isAcceptableAnswer } from '../../shared/answer-utils';
+import {
+  localizeGrammarExamples,
+  localizeGrammarPrompt,
+  localizeGrammarRule,
+  localizeGrammarTitle,
+} from '../../shared/learning-localization';
+import { GrammarTopic, LevelId } from '../../shared/models/content';
 
 @Component({
   selector: 'app-grammar',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, FormsModule],
   templateUrl: './grammar.html',
-  styleUrl: './grammar.css'
+  styleUrl: './grammar.css',
 })
 export class Grammar implements OnInit {
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
+  private readonly catalog = inject(CatalogService);
+  private readonly auth = inject(AuthService);
+  private readonly profile = inject(ProfileService);
+  readonly lang = inject(LanguageService);
 
-  levelId: string = 'a1';
-  currentTopicId: string = '1';
+  levelId: LevelId = 'a1';
+  currentTopicId = '1';
   isExerciseActive = false;
-  userAnswer: string = '';
+  userAnswer = '';
   isChecked = false;
   isCorrect = false;
+  saveMessage = '';
+  topics: GrammarTopic[] = [];
 
-  topics: any[] = [];
-
-  // Объединенная база данных: содержит правила, примеры и упражнения
-  grammarDatabase: { [key: string]: any[] } = {
-    'a1': [
-      {
-        id: '1',
-        title: 'Множественное число (-лар/-лер)',
-        rule: 'Окончания -лар/-лер, -дар/-дер, -тар/-тер добавляются в зависимости от последнего звука слова. После гласных и р, л, й — -лар/-лер.',
-        examples: [
-          'Кітап (книга) + <strong>тар</strong> = Кітаптар (книги)',
-          'Дәптер (тетрадь) + <strong>лер</strong> = Дәптерлер (тетради)'
-        ],
-        exercise: { word: 'Кітап (книги)', correct: 'тар' }
-      },
-      {
-        id: '2',
-        title: 'Притяжательные окончания',
-        rule: 'Для обозначения принадлежности предмета лицу (мой, твой) используются окончания -ым/-ім, -ың/-ің. Например: менің үйім (мой дом).',
-        examples: [
-          'Менің қалам + <strong>ым</strong> (Моя ручка)',
-          'Сенің дәптер + <strong>ің</strong> (Твоя тетрадь)'
-        ],
-        exercise: { word: 'Менің қалам...', correct: 'ым' }
-      },
-      {
-        id: '3',
-        title: 'Именительный падеж (Атау септік)',
-        rule: 'Основная форма слова, отвечающая на вопросы Кім? (Кто?) Не? (Что?). Например: Оқушы (Ученик), Терезе (Окно).',
-        examples: [
-          '<strong>Оқушы</strong> келді (Ученик пришел)',
-          '<strong>Терезе</strong> ашық (Окно открыто)'
-        ],
-        exercise: { word: '... (Кто?) келді? (Ученик)', correct: 'оқушы' }
-      },
-      {
-        id: '4',
-        title: 'Родительный падеж (Ілік септік)',
-        rule: 'Указывает на принадлежность одного предмета другому. Окончания: -ның/-нің, -дың/-дің, -тың/-тің.',
-        examples: [
-          'Дос + <strong>ымның</strong> үйі (Дом друга)',
-          'Мектеп + <strong>тің</strong> ауласы (Двор школы)'
-        ],
-        exercise: { word: 'Әпкем... үйі (Дом сестры)', correct: 'нің' }
-      },
-      {
-        id: '5',
-        title: 'Дательный падеж (Барыс септік)',
-        rule: 'Указывает направление или цель (куда?). Окончания: -ға/-ге, -қа/-ке.',
-        examples: [
-          'Әжетхана + <strong>ға</strong> бару (Идти в туалет)',
-          'Ауыл + <strong>ға</strong> келу (Приехать в аул)'
-        ],
-        exercise: { word: 'Мектеп... бару (идти в школу)', correct: 'ке' }
-      },
-      {
-        id: '6',
-        title: 'Местный падеж (Жатыс септік)',
-        rule: 'Указывает на местонахождение (где?). Окончания: -да/-де, -та/-те, -нда/-нде. Например: үйде (дома), қалада (в городе).',
-        examples: [
-          'Үй + <strong>де</strong> отыру (Сидеть дома)',
-          'Қала + <strong>да</strong> тұру (Жить в городе)'
-        ],
-        exercise: { word: 'Астана... тұрамын (живу в Астане)', correct: 'да' }
-      },
-      {
-        id: '7',
-        title: 'Отрицательная форма глагола',
-        rule: 'Образуется с помощью суффиксов -ма/-ме, -ба/-бе, -па/-пе, которые добавляются к корню глагола.',
-        examples: [
-          'Ал + <strong>ма</strong> (Не бери)',
-          'Кел + <strong>ме</strong> (Не приходи)'
-        ],
-        exercise: { word: 'Бар... (не иди)', correct: 'ма' }
-      },
-      {
-        id: '8',
-        title: 'Вопросительные частицы',
-        rule: 'Частицы ма/ме, ба/бе, па/пе ставятся в конце предложения для создания общих вопросов.',
-        examples: [
-          'Сен студентсің <strong>бе</strong>? (Ты студент?)',
-          'Бұл кітап <strong>па</strong>? (Это книга?)'
-        ],
-        exercise: { word: 'Бұл қалам ... ? (Это ручка?)', correct: 'ба' }
-      },
-      {
-        id: '9',
-        title: 'Личные окончания (Мен/Сен)',
-        rule: 'Обозначают лицо, совершающее действие или являющееся кем-то (Я есть, Ты есть). Окончания: -мын/-мін, -сың/-сің.',
-        examples: [
-          'Мен оқушы + <strong>мын</strong> (Я ученик)',
-          'Сен дәрігер + <strong>сің</strong> (Ты врач)'
-        ],
-        exercise: { word: 'Мен дәрігер... (Я врач)', correct: 'мін' }
-      },
-      {
-        id: '10',
-        title: 'Числительные',
-        rule: 'Сан есім. Один — бір, два — екі, три — үш. Используются для счета предметов без окончаний множественного числа.',
-        examples: [
-          '<strong>Бір</strong> кітап (Одна книга)',
-          '<strong>Екі</strong> бала (Двое детей)'
-        ],
-        exercise: { word: '5 (напишите словом)', correct: 'бес' }
-      }
-    ],
-    'a2': [
-      {
-        id: '1',
-        title: 'Прошедшее время',
-        rule: 'Обозначает законченное действие. Окончания: -ды/-ді, -ты/-ті.',
-        examples: [
-          'Ол кел + <strong>ді</strong> (Он пришел)',
-          'Мен жаз + <strong>дым</strong> (Я написал)'
-        ],
-        exercise: { word: 'Ол кет.. (Он ушел)', correct: 'ті' }
-      }
-    ]
-  };
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.levelId = (params.get('levelId') || 'a1').toLowerCase();
-      this.currentTopicId = params.get('topicId') || '1';
-      this.topics = this.grammarDatabase[this.levelId] || this.grammarDatabase['a1'];
-
-      this.isExerciseActive = false;
-      this.resetExercise();
+  async ngOnInit(): Promise<void> {
+    await this.catalog.ensureLoaded();
+    this.route.paramMap.subscribe((params) => {
+      void this.applyRoute(params);
     });
   }
 
-  get currentTopic() {
-    return this.topics.find(t => t.id === this.currentTopicId) || this.topics[0];
+  get currentTopic(): GrammarTopic | null {
+    return this.topics.find((topic) => topic.id === this.currentTopicId) ?? this.topics[0] ?? null;
   }
 
-  toggleExercise() {
+  topicTitle(topic: GrammarTopic): string {
+    return localizeGrammarTitle(this.levelId, topic, this.lang.lang());
+  }
+
+  topicRule(topic: GrammarTopic): string {
+    return localizeGrammarRule(this.levelId, topic, this.lang.lang());
+  }
+
+  topicExamples(topic: GrammarTopic): string[] {
+    return localizeGrammarExamples(this.levelId, topic, this.lang.lang());
+  }
+
+  exercisePrompt(topic: GrammarTopic): string {
+    return localizeGrammarPrompt(this.levelId, topic, this.lang.lang());
+  }
+
+  topicsTitle(): string {
+    return this.copy({
+      ru: 'Темы по грамматике',
+      en: 'Grammar topics',
+      kz: 'Грамматика тақырыптары',
+    });
+  }
+
+  badgeLabel(): string {
+    return this.copy({
+      ru: 'Правило',
+      en: 'Rule',
+      kz: 'Ереже',
+    });
+  }
+
+  ruleHeading(): string {
+    return this.copy({
+      ru: 'Как это работает',
+      en: 'How it works',
+      kz: 'Қалай жұмыс істейді',
+    });
+  }
+
+  examplesLabel(): string {
+    return this.copy({
+      ru: 'Примеры',
+      en: 'Examples',
+      kz: 'Мысалдар',
+    });
+  }
+
+  practiceHeading(): string {
+    return this.copy({
+      ru: 'Практика',
+      en: 'Practice',
+      kz: 'Практика',
+    });
+  }
+
+  practiceText(): string {
+    return this.copy({
+      ru: 'Закрепите правило и проверьте ответ. Правильный ответ сохраняется как завершенная тема.',
+      en: 'Practice the rule and check your answer. A correct answer is saved as a completed topic.',
+      kz: 'Ережені бекітіп, жауабыңызды тексеріңіз. Дұрыс жауап тақырыпты аяқталған деп сақтайды.',
+    });
+  }
+
+  startExerciseLabel(): string {
+    return this.copy({
+      ru: 'Начать упражнение',
+      en: 'Start exercise',
+      kz: 'Жаттығуды бастау',
+    });
+  }
+
+  taskLabel(): string {
+    return this.copy({
+      ru: 'Задание',
+      en: 'Task',
+      kz: 'Тапсырма',
+    });
+  }
+
+  answerPlaceholder(): string {
+    return this.copy({
+      ru: 'Ваш ответ',
+      en: 'Your answer',
+      kz: 'Жауабыңыз',
+    });
+  }
+
+  successText(): string {
+    return this.copy({
+      ru: 'Правильно. Тема засчитана.',
+      en: 'Correct. The topic is counted as completed.',
+      kz: 'Дұрыс. Тақырып орындалды деп есептелді.',
+    });
+  }
+
+  errorText(): string {
+    return this.copy({
+      ru: 'Ошибка. Попробуйте еще раз.',
+      en: 'Not quite right. Try again.',
+      kz: 'Қате. Қайта көріңіз.',
+    });
+  }
+
+  checkLabel(): string {
+    return this.copy({
+      ru: 'Проверить',
+      en: 'Check',
+      kz: 'Тексеру',
+    });
+  }
+
+  hideLabel(): string {
+    return this.copy({
+      ru: 'Скрыть',
+      en: 'Hide',
+      kz: 'Жасыру',
+    });
+  }
+
+  loadingText(): string {
+    return this.copy({
+      ru: 'Загрузка темы...',
+      en: 'Loading topic...',
+      kz: 'Тақырып жүктелуде...',
+    });
+  }
+
+  toggleExercise(): void {
     this.isExerciseActive = !this.isExerciseActive;
     if (!this.isExerciseActive) {
       this.resetExercise();
     }
   }
 
-  resetExercise() {
+  resetExercise(): void {
     this.userAnswer = '';
     this.isChecked = false;
     this.isCorrect = false;
   }
 
-  checkAnswer() {
-    if (!this.userAnswer.trim()) return;
-
-    const correctAnswer = this.currentTopic.exercise?.correct.toLowerCase();
-
-    if (this.userAnswer.trim().toLowerCase() === correctAnswer) {
-      this.isCorrect = true;
-    } else {
-      this.isCorrect = false;
+  async checkAnswer(): Promise<void> {
+    if (!this.currentTopic || !this.userAnswer.trim()) {
+      return;
     }
 
+    this.isCorrect = isAcceptableAnswer(this.userAnswer, [this.currentTopic.exercise.correct]);
     this.isChecked = true;
+
+    if (!this.auth.user()) {
+      this.saveMessage = this.copy({
+        ru: 'Войдите, чтобы сохранить выполнение грамматики.',
+        en: 'Sign in to save grammar practice.',
+        kz: 'Грамматика нәтижесін сақтау үшін кіріңіз.',
+      });
+      return;
+    }
+
+    try {
+      await this.profile.saveGrammarProgress({
+        levelId: this.levelId,
+        topicId: this.currentTopicId,
+        answer: this.userAnswer,
+        isCorrect: this.isCorrect,
+        completed: this.isCorrect,
+      });
+      this.saveMessage = this.isCorrect
+        ? this.copy({
+            ru: 'Тема сохранена как завершенная.',
+            en: 'The topic was saved as completed.',
+            kz: 'Тақырып аяқталған ретінде сақталды.',
+          })
+        : this.copy({
+            ru: 'Попытка сохранена.',
+            en: 'Attempt saved.',
+            kz: 'Әрекет сақталды.',
+          });
+    } catch (error) {
+      this.saveMessage = error instanceof Error
+        ? error.message
+        : this.copy({
+            ru: 'Не удалось сохранить прогресс.',
+            en: 'Unable to save progress.',
+            kz: 'Прогресті сақтау мүмкін болмады.',
+          });
+    }
+  }
+
+  private async applyRoute(params: ParamMap): Promise<void> {
+    const catalog = await this.catalog.ensureLoaded();
+    this.levelId = ((params.get('levelId') || 'a1').toLowerCase() as LevelId);
+    this.currentTopicId = params.get('topicId') || '1';
+    this.topics = catalog.byLevel[this.levelId]?.grammar ?? [];
+    this.isExerciseActive = false;
+    this.resetExercise();
+
+    if (!this.auth.user()) {
+      this.saveMessage = this.copy({
+        ru: 'Войдите, чтобы сохранять текущую тему.',
+        en: 'Sign in to save the current topic.',
+        kz: 'Ағымдағы тақырыпты сақтау үшін кіріңіз.',
+      });
+      return;
+    }
+
+    try {
+      await this.profile.saveCheckpoint({
+        levelId: this.levelId,
+        contentType: 'grammar',
+        itemId: this.currentTopicId,
+      });
+      this.saveMessage = this.copy({
+        ru: 'Текущая тема сохранена.',
+        en: 'Current topic saved.',
+        kz: 'Ағымдағы тақырып сақталды.',
+      });
+    } catch (error) {
+      this.saveMessage = error instanceof Error
+        ? error.message
+        : this.copy({
+            ru: 'Не удалось сохранить текущую тему.',
+            en: 'Unable to save the current topic.',
+            kz: 'Ағымдағы тақырыпты сақтау мүмкін болмады.',
+          });
+    }
+  }
+
+  private copy(bank: { ru: string; en: string; kz: string }): string {
+    return bank[this.lang.lang()];
   }
 }

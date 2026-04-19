@@ -1,0 +1,1365 @@
+{
+  "meta": {
+    "version": 3,
+    "createdAt": "2026-03-31T15:57:56.690Z",
+    "updatedAt": "2026-04-19T09:30:30.386Z"
+  },
+  "users": [
+    {
+      "id": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "email": "ekon597@mail.ru",
+      "name": "Елгелді",
+      "role": "student",
+      "avatar": "👨",
+      "teacherId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "passwordSalt": "4427c717de8c46dd22bafdfbca3dc545",
+      "passwordHash": "17f84f0a56b048425dd8de1d7b50c0da8ad987b910720f94726b3e8692f3cc79ab99386d3f6b78d3c377496a9521bddde6e148436e6389c15559a289a3eecec0",
+      "currentLevel": "b1",
+      "recommendedLevel": "b1",
+      "streak": 1,
+      "xp": 1845,
+      "lastActivityDate": "2026-04-19",
+      "createdAt": "2026-03-31T16:00:39.030Z",
+      "updatedAt": "2026-04-19T09:30:20.410Z",
+      "resume": {
+        "levelId": "b1",
+        "contentType": "mini-games",
+        "itemId": "b1-match",
+        "updatedAt": "2026-04-19T09:30:20.410Z"
+      }
+    },
+    {
+      "id": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "email": "adema@mail.ru",
+      "name": "Adema",
+      "role": "teacher",
+      "avatar": "👨",
+      "teacherId": null,
+      "passwordSalt": "d397716bb831941807981b55d7d5b613",
+      "passwordHash": "6db44f47193e656966b42e950fe5bac64b206d61c7c4b22e527fe1f66b485a4c8eea20dc6ce21166100f4385c100ffc9c7ee35bafa3a8de35ff8a9e7fb79edcc",
+      "currentLevel": "a2",
+      "recommendedLevel": null,
+      "streak": 1,
+      "xp": 765,
+      "lastActivityDate": "2026-04-09",
+      "createdAt": "2026-04-09T14:34:45.398Z",
+      "updatedAt": "2026-04-09T16:32:25.694Z",
+      "resume": {
+        "levelId": "a2",
+        "contentType": "mini-games",
+        "itemId": "a2-match",
+        "updatedAt": "2026-04-09T16:32:25.694Z"
+      }
+    },
+    {
+      "id": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "email": "1234@mal.ru",
+      "name": "Нұржан",
+      "role": "teacher",
+      "avatar": "👨",
+      "teacherId": null,
+      "passwordSalt": "1385a58b786a5f4d68b5ab8579592fa2",
+      "passwordHash": "9d98c5564e84fe888981bfee82ca7cc0fd577dd766978d72fccf142d118d0dad7eabda06a966f33a171d84d6ff9640251dedff13928d6310a9ad86ce31b2a87d",
+      "currentLevel": "a2",
+      "recommendedLevel": "a2",
+      "streak": 1,
+      "xp": 145,
+      "lastActivityDate": "2026-04-15",
+      "createdAt": "2026-04-15T07:26:35.543Z",
+      "updatedAt": "2026-04-15T07:29:07.864Z",
+      "resume": {
+        "levelId": "a2",
+        "contentType": "mini-games",
+        "itemId": "a2-drag",
+        "updatedAt": "2026-04-15T07:29:07.864Z"
+      }
+    },
+    {
+      "id": "e1d39cc7-a260-4f2a-9ca3-730d8a77c1a7",
+      "email": "12234@mal.ru",
+      "name": "Елгелді",
+      "role": "student",
+      "avatar": "👨",
+      "teacherId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "passwordSalt": "bb29f25a7cca9fe441ab97a782a45045",
+      "passwordHash": "a63da8f10554fdf5fda1fdbadff7a57ea58c807514f80cd83064400836d4d6c80935a3e3e237558c26345b90364432d3c6c18c31da67cb5e74c10492712ceb67",
+      "currentLevel": "a1",
+      "recommendedLevel": null,
+      "streak": 0,
+      "xp": 0,
+      "lastActivityDate": null,
+      "createdAt": "2026-04-15T07:29:42.681Z",
+      "updatedAt": "2026-04-15T07:29:48.015Z",
+      "resume": null
+    }
+  ],
+  "sessions": [
+    {
+      "id": "74c3ba12-c93d-4042-adce-69fb30c5a679",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "tokenHash": "19c86eac847ec331c6c6360db01452217e783bc954d0e662e44f104b22e5c8c0",
+      "createdAt": "2026-04-19T08:16:40.311Z",
+      "expiresAt": "2026-05-19T08:16:40.311Z",
+      "lastSeenAt": "2026-04-19T09:30:30.360Z",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0",
+      "ip": "::1"
+    }
+  ],
+  "diagnosticAttempts": [
+    {
+      "id": "f3563673-dbea-4a51-ab04-d3c709470142",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "legacy-1",
+          "answer": 1
+        },
+        {
+          "questionId": "legacy-2",
+          "answer": 0
+        },
+        {
+          "questionId": "legacy-3",
+          "answer": 2
+        },
+        {
+          "questionId": "legacy-4",
+          "answer": 1
+        }
+      ],
+      "score": 4,
+      "totalQuestions": 4,
+      "recommendedLevel": "b1",
+      "createdAt": "2026-03-31T16:00:56.663Z"
+    },
+    {
+      "id": "ca45e117-1e8d-4f94-bc0b-f889057947f4",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": "Hello",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "кітаптар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": "отбасы",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        }
+      ],
+      "score": 6,
+      "totalQuestions": 6,
+      "recommendedLevel": "b1",
+      "createdAt": "2026-04-09T15:33:17.285Z"
+    },
+    {
+      "id": "96e2dbdd-a1f5-4482-82ae-c3587d2c4884",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": "Привет",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "кітаптар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": "отбасы",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        }
+      ],
+      "score": 6,
+      "totalQuestions": 6,
+      "recommendedLevel": "b1",
+      "createdAt": "2026-04-14T10:27:15.221Z"
+    },
+    {
+      "id": "77b8e5ac-354f-443d-a001-af621e46d79b",
+      "userId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": "Привет",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 3
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "вфывф",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": "фывфывфвы",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        }
+      ],
+      "score": 4,
+      "totalQuestions": 6,
+      "recommendedLevel": "a2",
+      "createdAt": "2026-04-15T07:28:39.030Z"
+    },
+    {
+      "id": "b8811e7a-0aec-431b-8353-9ed1a619696c",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": "Cәлем",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "кітаптар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": "Отбасы",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        }
+      ],
+      "score": 5,
+      "totalQuestions": 6,
+      "recommendedLevel": "a2",
+      "createdAt": "2026-04-19T08:47:45.661Z"
+    },
+    {
+      "id": "64d765db-a25f-4247-a69d-928386e8ab14",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 3
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "кітаптар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": "Менің отбасым",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        }
+      ],
+      "score": 6,
+      "totalQuestions": 6,
+      "recommendedLevel": "b1",
+      "createdAt": "2026-04-19T09:01:36.974Z"
+    },
+    {
+      "id": "e7388dd3-2a74-40e6-a6fd-d7c32eedda10",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "responses": [
+        {
+          "questionId": "diag-1",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "diag-2",
+          "answer": 0,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-3",
+          "answer": 1,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "diag-4",
+          "answer": "Мен алматыда тұрамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        },
+        {
+          "questionId": "diag-5",
+          "answer": "кітаптар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "diag-6",
+          "answer": 0,
+          "listeningPlays": 2
+        }
+      ],
+      "score": 6,
+      "totalQuestions": 6,
+      "recommendedLevel": "b1",
+      "createdAt": "2026-04-19T09:29:47.907Z"
+    }
+  ],
+  "videoProgress": [
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "lessonId": "1",
+      "status": "started",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-04-19T09:02:40.206Z",
+      "completedAt": "2026-03-31T16:02:02.671Z"
+    },
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "lessonId": "2",
+      "status": "started",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-03-31T16:02:21.907Z",
+      "completedAt": "2026-03-31T16:02:05.681Z"
+    },
+    {
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "lessonId": "1",
+      "status": "completed",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-04-09T14:39:53.794Z",
+      "completedAt": "2026-04-09T14:39:53.794Z"
+    },
+    {
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "lessonId": "2",
+      "status": "completed",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-04-09T14:39:57.435Z",
+      "completedAt": "2026-04-09T14:39:57.435Z"
+    },
+    {
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "lessonId": "3",
+      "status": "completed",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-04-09T14:40:00.532Z",
+      "completedAt": "2026-04-09T14:40:00.532Z"
+    },
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "lessonId": "1",
+      "status": "started",
+      "lastPositionSeconds": null,
+      "watchedSeconds": 0,
+      "lastViewedAt": "2026-04-19T09:03:56.695Z",
+      "completedAt": null
+    }
+  ],
+  "grammarProgress": [
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "topicId": "1",
+      "attempts": 1,
+      "correctAnswers": 1,
+      "firstAttemptCorrect": true,
+      "lastAnswer": "се",
+      "lastViewedAt": "2026-03-31T16:01:08.333Z",
+      "completedAt": "2026-03-31T16:01:08.333Z"
+    },
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "topicId": "3",
+      "attempts": 2,
+      "correctAnswers": 1,
+      "firstAttemptCorrect": false,
+      "lastAnswer": "себебі",
+      "lastViewedAt": "2026-03-31T16:01:27.432Z",
+      "completedAt": "2026-03-31T16:01:27.432Z"
+    },
+    {
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "topicId": "1",
+      "attempts": 1,
+      "correctAnswers": 1,
+      "firstAttemptCorrect": true,
+      "lastAnswer": "тар",
+      "lastViewedAt": "2026-04-09T14:40:13.469Z",
+      "completedAt": "2026-04-09T14:40:13.469Z"
+    },
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "topicId": "1",
+      "attempts": 1,
+      "correctAnswers": 1,
+      "firstAttemptCorrect": true,
+      "lastAnswer": "тар",
+      "lastViewedAt": "2026-04-14T10:48:10.161Z",
+      "completedAt": "2026-04-14T10:48:10.161Z"
+    }
+  ],
+  "shadowingProgress": [
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "taskId": "1",
+      "attempts": 1,
+      "successfulAttempts": 1,
+      "lastRecognizedText": "Сәлеметсіз бе?",
+      "lastScore": 100,
+      "lastPracticedAt": "2026-04-14T10:48:23.076Z",
+      "completedAt": "2026-04-14T10:48:23.076Z"
+    }
+  ],
+  "skillProgress": [
+    {
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "skillType": "listening",
+      "selectedAnswers": [
+        1,
+        1
+      ],
+      "correctAnswers": 2,
+      "totalQuestions": 2,
+      "lastPracticedAt": "2026-03-31T16:01:56.986Z",
+      "completedAt": "2026-03-31T16:01:56.986Z"
+    }
+  ],
+  "miniGameAttempts": [
+    {
+      "id": "fe15b637-d3b6-4934-9ee4-171b7e7cbf99",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "gameType": "drag-and-drop",
+      "gameId": "b1-drag",
+      "score": 5,
+      "total": 5,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-09T14:33:04.969Z"
+    },
+    {
+      "id": "4a90031c-b3d0-4253-b447-6856a9e568f6",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "gameType": "listening-sprint",
+      "gameId": "b1-listening",
+      "score": 2,
+      "total": 2,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-09T14:33:47.808Z"
+    },
+    {
+      "id": "8278a536-a4d9-4f0d-b4f3-8b20d1a4e394",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a2",
+      "gameType": "drag-and-drop",
+      "gameId": "a2-drag",
+      "score": 4,
+      "total": 4,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-09T16:31:57.761Z"
+    },
+    {
+      "id": "bdac0584-b579-45bf-873e-000d56a8cd3b",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a2",
+      "gameType": "listening-sprint",
+      "gameId": "a2-listening",
+      "score": 2,
+      "total": 2,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-09T16:32:12.357Z"
+    },
+    {
+      "id": "83a1d0c5-8b7f-42ac-8f76-66858eac31dd",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b2",
+      "gameType": "match-words",
+      "gameId": "b2-match",
+      "score": 4,
+      "total": 4,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-10T03:00:33.657Z"
+    },
+    {
+      "id": "447bc793-d829-4355-a3dd-78c49b8e534c",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "gameType": "drag-and-drop",
+      "gameId": "b1-drag",
+      "score": 5,
+      "total": 5,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-13T05:44:38.092Z"
+    },
+    {
+      "id": "8de7a3c5-666b-4f24-b29a-dc819467eee1",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "gameType": "match-words",
+      "gameId": "b1-match",
+      "score": 4,
+      "total": 4,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-13T05:44:52.655Z"
+    },
+    {
+      "id": "de8ff42b-0cb6-4ee5-ab1f-ef6caa96563c",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "gameType": "drag-and-drop",
+      "gameId": "a1-drag",
+      "score": 3,
+      "total": 3,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-14T12:13:52.407Z"
+    },
+    {
+      "id": "3063d1fb-dbf2-4304-bdc8-e68261fa2ede",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "gameType": "listening-sprint",
+      "gameId": "a1-listening",
+      "score": 2,
+      "total": 2,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-14T13:22:50.334Z"
+    },
+    {
+      "id": "295c3774-107e-4238-8fee-d08c20fb56e9",
+      "userId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "levelId": "a2",
+      "gameType": "drag-and-drop",
+      "gameId": "a2-drag",
+      "score": 2,
+      "total": 4,
+      "percent": 50,
+      "completed": true,
+      "createdAt": "2026-04-15T07:29:07.864Z"
+    },
+    {
+      "id": "af22b9f2-7b18-44d7-8b26-3c3d3167977d",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "gameType": "drag-and-drop",
+      "gameId": "a1-drag",
+      "score": 3,
+      "total": 3,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-19T08:20:26.814Z"
+    },
+    {
+      "id": "e4b47f35-08b9-4bef-baeb-b5e65c9057ce",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a2",
+      "gameType": "match-words",
+      "gameId": "a2-match",
+      "score": 4,
+      "total": 4,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-19T08:49:34.186Z"
+    },
+    {
+      "id": "4b9ea7b0-824e-4614-8adc-6303bf791da1",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a2",
+      "gameType": "drag-and-drop",
+      "gameId": "a2-drag",
+      "score": 4,
+      "total": 4,
+      "percent": 100,
+      "completed": true,
+      "createdAt": "2026-04-19T08:49:43.209Z"
+    }
+  ],
+  "moduleTestAttempts": [
+    {
+      "id": "88b3301c-30b1-4648-8b8e-946be9a06868",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "responses": [
+        {
+          "questionId": "legacy-1",
+          "answer": 0
+        },
+        {
+          "questionId": "legacy-2",
+          "answer": 1
+        },
+        {
+          "questionId": "legacy-3",
+          "answer": 2
+        },
+        {
+          "questionId": "legacy-4",
+          "answer": 0
+        },
+        {
+          "questionId": "legacy-5",
+          "answer": 1
+        }
+      ],
+      "score": 5,
+      "totalQuestions": 5,
+      "passed": true,
+      "percent": 100,
+      "createdAt": "2026-04-09T14:40:44.751Z"
+    },
+    {
+      "id": "224ad0f2-d66d-41eb-92d8-4b89f622a71d",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "responses": [
+        {
+          "questionId": "b1-mt-1",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "b1-mt-2",
+          "answer": "Біз келесі апта барамыз",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "b1-mt-3",
+          "answer": 0,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "b1-mt-4",
+          "answer": "Менің ойымша, бұл жақсы Шешім.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        }
+      ],
+      "score": 3,
+      "totalQuestions": 4,
+      "passed": true,
+      "percent": 75,
+      "createdAt": "2026-04-09T15:34:04.678Z"
+    },
+    {
+      "id": "29940355-da98-4215-98bf-baf3f09977b9",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a2",
+      "responses": [
+        {
+          "questionId": "a2-mt-1",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "a2-mt-2",
+          "answer": "Мне нужен билет",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "a2-mt-3",
+          "answer": 2,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "a2-mt-4",
+          "answer": "Мен ертең жұмысқа барамын.",
+          "listeningPlays": 0,
+          "speakingAttempts": 1
+        }
+      ],
+      "score": 3,
+      "totalQuestions": 4,
+      "passed": true,
+      "percent": 75,
+      "createdAt": "2026-04-10T03:01:39.323Z"
+    },
+    {
+      "id": "a71704f6-9d64-40b0-8e50-3df58e158b21",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "responses": [
+        {
+          "questionId": "a1-mt-1",
+          "answer": 0,
+          "listeningPlays": 0
+        },
+        {
+          "questionId": "a1-mt-2",
+          "answer": "қалалар",
+          "listeningPlays": 0,
+          "speakingAttempts": 0
+        },
+        {
+          "questionId": "a1-mt-3",
+          "answer": 0,
+          "listeningPlays": 1
+        },
+        {
+          "questionId": "a1-mt-4",
+          "answer": "Сағат қанша?",
+          "listeningPlays": 0,
+          "speakingAttempts": 3
+        }
+      ],
+      "score": 4,
+      "totalQuestions": 4,
+      "passed": true,
+      "percent": 100,
+      "createdAt": "2026-04-19T09:04:56.341Z"
+    }
+  ],
+  "teacherTasks": [
+    {
+      "id": "5d764e68-be11-4ee2-a5f6-ae3d819ec8b9",
+      "teacherId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "studentId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "title": "Напиши эссе на тему скебобович",
+      "description": "Көлемі 200 сөз",
+      "dueDate": "2026-04-10",
+      "createdAt": "2026-04-09T15:36:08.747Z",
+      "completedAt": "2026-04-09T15:36:22.534Z"
+    },
+    {
+      "id": "02dbb162-aa89-451f-b495-70a8c7a7cfd5",
+      "teacherId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "studentId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "title": "Write essay",
+      "description": "ҚОЕ",
+      "dueDate": "2026-04-10",
+      "createdAt": "2026-04-09T16:31:04.492Z",
+      "completedAt": "2026-04-09T16:34:00.160Z"
+    },
+    {
+      "id": "53a8cb0e-aa14-450c-ae79-34801ac622e5",
+      "teacherId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "studentId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "title": "Скебобтық",
+      "description": "Скебоб бол",
+      "dueDate": "2026-04-14",
+      "createdAt": "2026-04-13T05:45:45.299Z",
+      "completedAt": "2026-04-13T05:45:58.717Z"
+    },
+    {
+      "id": "27697482-85f6-47aa-a502-f0742767bc8a",
+      "teacherId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "studentId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "title": "Сккебрлффывф",
+      "description": "Скебоб бол",
+      "dueDate": "2026-04-15",
+      "createdAt": "2026-04-14T10:50:34.083Z",
+      "completedAt": "2026-04-14T10:50:50.779Z"
+    },
+    {
+      "id": "3f9c3951-5e9c-4275-beb8-10d497813f40",
+      "teacherId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "studentId": "e1d39cc7-a260-4f2a-9ca3-730d8a77c1a7",
+      "title": "1234",
+      "description": "ASDASDASDSA",
+      "dueDate": "2026-04-23",
+      "createdAt": "2026-04-15T07:30:33.017Z",
+      "completedAt": null
+    }
+  ],
+  "teacherChangeRequests": [],
+  "feedbackMessages": [
+    {
+      "id": "3c6e67ab-2a61-47d0-acd5-fea18dd6c651",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "Скебобович",
+      "createdAt": "2026-04-09T15:34:47.722Z"
+    },
+    {
+      "id": "88ab5eb8-add1-433d-bfad-56efdb9f611e",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "role": "teacher",
+      "message": "For example",
+      "createdAt": "2026-04-09T16:30:15.557Z"
+    },
+    {
+      "id": "e27fd911-bd7a-420a-809f-e3d56c20cd56",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "role": "teacher",
+      "message": "gsdasadqwe123132",
+      "createdAt": "2026-04-09T16:30:31.388Z"
+    },
+    {
+      "id": "0f35118b-c3b3-4e42-9362-92e87bb9f861",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "SADADSSSSSSSSSSSS",
+      "createdAt": "2026-04-09T16:36:00.439Z"
+    },
+    {
+      "id": "3f0b63a2-af98-4380-912a-4b82784dabdb",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "zassda1423142324",
+      "createdAt": "2026-04-09T16:36:50.841Z"
+    },
+    {
+      "id": "fc64ff15-913f-43ac-9c59-5974273facbd",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "Скебобооооооооооооооооб",
+      "createdAt": "2026-04-10T02:35:42.572Z"
+    },
+    {
+      "id": "33b2915c-e557-4ea8-b0ef-4077c0e3c1d9",
+      "userId": null,
+      "role": null,
+      "message": "bot delivery smoke test",
+      "createdAt": "2026-04-10T02:58:07.456Z"
+    },
+    {
+      "id": "ca6dc2c4-cd34-47e5-94d2-cea4bfaed026",
+      "userId": null,
+      "role": null,
+      "message": "post-fix bot smoke test",
+      "createdAt": "2026-04-10T02:59:00.734Z"
+    },
+    {
+      "id": "7a24dbf3-d05c-4f41-9be1-16af1d6cb922",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "Бәрі керемет",
+      "createdAt": "2026-04-10T03:02:19.966Z"
+    },
+    {
+      "id": "ee4c5e5c-1371-41d3-83f7-6119f282b970",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "Crt,j,",
+      "createdAt": "2026-04-13T05:42:54.209Z"
+    },
+    {
+      "id": "c51bac42-78e8-4cea-b47e-1866160137fb",
+      "userId": "e1d39cc7-a260-4f2a-9ca3-730d8a77c1a7",
+      "role": "student",
+      "message": "GSDASDASD",
+      "createdAt": "2026-04-15T07:29:55.148Z"
+    },
+    {
+      "id": "da6116c1-bdff-4792-96a9-729ab59acbe1",
+      "userId": "e1d39cc7-a260-4f2a-9ca3-730d8a77c1a7",
+      "role": "student",
+      "message": "GSDASDASD",
+      "createdAt": "2026-04-15T07:29:56.584Z"
+    },
+    {
+      "id": "32f8f507-40a9-40f4-8c2a-72f6588a6c58",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "role": "student",
+      "message": "Скебоб",
+      "createdAt": "2026-04-19T09:30:30.379Z"
+    }
+  ],
+  "achievementUnlocks": [
+    {
+      "id": "d8c54caa-cd86-4f0f-8e1c-aca7ced519b2",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "achievementId": "first-steps",
+      "unlockedAt": "2026-03-31T16:02:05.681Z"
+    },
+    {
+      "id": "26edc66d-20bf-4b82-b828-763dae6e8359",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "achievementId": "first-steps",
+      "unlockedAt": "2026-04-09T14:40:44.752Z"
+    },
+    {
+      "id": "1239cf54-b87a-463c-a7a2-634d771e32ba",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "achievementId": "master-a1",
+      "unlockedAt": "2026-04-09T14:40:44.752Z"
+    },
+    {
+      "id": "8be6e6b7-9f8a-4a85-ae99-eb10c30e1ea7",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "achievementId": "polyglot",
+      "unlockedAt": "2026-04-14T10:48:10.162Z"
+    },
+    {
+      "id": "a492ab2e-71e6-4275-b5ca-9de421d0bee5",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "achievementId": "master-a1",
+      "unlockedAt": "2026-04-19T09:04:56.342Z"
+    }
+  ],
+  "rewardClaims": [
+    {
+      "id": "f3bf1324-d4ee-4483-949a-2b29e1349d7a",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:b1:b1-drag",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-09T14:33:04.969Z"
+    },
+    {
+      "id": "5ace2c76-8af5-46df-85ec-83c5daf51c67",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-09:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-09T14:33:04.969Z"
+    },
+    {
+      "id": "da59ad17-23c2-4503-91cf-6f4c9251210b",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:b1:b1-listening",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-09T14:33:47.808Z"
+    },
+    {
+      "id": "fb6a5a7b-3816-4c63-abea-c77a40ebaa2d",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "video:a1:1",
+      "xpAwarded": 70,
+      "claimedAt": "2026-04-09T14:39:53.794Z"
+    },
+    {
+      "id": "6f62e733-a228-4917-bb08-7e8e30899ea0",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "daily-task",
+      "refId": "2026-04-09:video-spark",
+      "xpAwarded": 35,
+      "claimedAt": "2026-04-09T14:39:53.794Z"
+    },
+    {
+      "id": "38d3115e-a49a-4651-894e-c76272865cec",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "video:a1:2",
+      "xpAwarded": 70,
+      "claimedAt": "2026-04-09T14:39:57.435Z"
+    },
+    {
+      "id": "83a41005-36c7-4643-8cb9-d4d77238e600",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "video:a1:3",
+      "xpAwarded": 70,
+      "claimedAt": "2026-04-09T14:40:00.532Z"
+    },
+    {
+      "id": "edc47597-546c-4d81-9fd7-9056d2249c3a",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "grammar:a1:1",
+      "xpAwarded": 60,
+      "claimedAt": "2026-04-09T14:40:13.469Z"
+    },
+    {
+      "id": "45aa68bd-048c-4e70-ad27-9a89477322b6",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "daily-task",
+      "refId": "2026-04-09:practice-loop",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-09T14:40:13.469Z"
+    },
+    {
+      "id": "76ca4a34-4b50-422a-a876-2d8f68c237e6",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "module-test:a1",
+      "xpAwarded": 140,
+      "claimedAt": "2026-04-09T14:40:44.751Z"
+    },
+    {
+      "id": "d1253a11-ed66-462c-8121-b935c22d946d",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "certificate",
+      "refId": "certificate:a1",
+      "xpAwarded": 120,
+      "claimedAt": "2026-04-09T14:40:44.752Z"
+    },
+    {
+      "id": "c322ef46-0a17-4bf7-a287-81bcaddf66f3",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "diagnostic:first",
+      "xpAwarded": 40,
+      "claimedAt": "2026-04-09T15:33:17.286Z"
+    },
+    {
+      "id": "2d0495fa-4e42-4bce-9366-f24c50119259",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "module-test:b1",
+      "xpAwarded": 140,
+      "claimedAt": "2026-04-09T15:34:04.678Z"
+    },
+    {
+      "id": "eeea6f24-09a5-459e-8b13-0b3c9b612a0b",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "certificate",
+      "refId": "certificate:b1",
+      "xpAwarded": 120,
+      "claimedAt": "2026-04-09T15:34:04.678Z"
+    },
+    {
+      "id": "f409dc91-0258-43e9-947c-ff3157368e1a",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "teacher-task:5d764e68-be11-4ee2-a5f6-ae3d819ec8b9",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-09T15:36:22.534Z"
+    },
+    {
+      "id": "dba60570-7357-45f4-a0b7-dc830db6cb3a",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "mini-game:a2:a2-drag",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-09T16:31:57.761Z"
+    },
+    {
+      "id": "644c4383-5799-442d-bbdb-5a31a2183900",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "daily-task",
+      "refId": "2026-04-09:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-09T16:31:57.761Z"
+    },
+    {
+      "id": "0442fc80-ffbf-44c9-afe7-d2a7f87077b4",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "kind": "content",
+      "refId": "mini-game:a2:a2-listening",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-09T16:32:12.358Z"
+    },
+    {
+      "id": "2aee315b-e0a3-4e6b-9da7-ca42ada8e1df",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "teacher-task:02dbb162-aa89-451f-b495-70a8c7a7cfd5",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-09T16:34:00.160Z"
+    },
+    {
+      "id": "4f51cfba-968b-4cae-b720-7c81c4ed20e1",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:b2:b2-match",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-10T03:00:33.658Z"
+    },
+    {
+      "id": "359f2fb8-24c7-4680-a127-0f2d1b8e294a",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-10:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-10T03:00:33.658Z"
+    },
+    {
+      "id": "03207391-9300-436d-9ba8-9b0b217be50e",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "module-test:a2",
+      "xpAwarded": 140,
+      "claimedAt": "2026-04-10T03:01:39.323Z"
+    },
+    {
+      "id": "88bdbd61-8a97-4803-bb8a-7ad935b22c11",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "certificate",
+      "refId": "certificate:a2",
+      "xpAwarded": 120,
+      "claimedAt": "2026-04-10T03:01:39.323Z"
+    },
+    {
+      "id": "118e6d84-17cd-4614-9904-b5d34592245e",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:b1:b1-match",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-13T05:44:52.655Z"
+    },
+    {
+      "id": "86190800-3e49-47cd-aad7-c3eab8bf563d",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-13:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-13T05:44:52.655Z"
+    },
+    {
+      "id": "4756d6f0-10e8-4255-ae8e-1cdc158a7fda",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "teacher-task:53a8cb0e-aa14-450c-ae79-34801ac622e5",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-13T05:45:58.717Z"
+    },
+    {
+      "id": "aa5bfd83-7484-41aa-84cd-59fa58875707",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "grammar:a1:1",
+      "xpAwarded": 60,
+      "claimedAt": "2026-04-14T10:48:10.161Z"
+    },
+    {
+      "id": "a9c1ff2a-da78-457c-b287-8f677dab9c95",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-14:practice-loop",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-14T10:48:10.162Z"
+    },
+    {
+      "id": "d28ce494-14bf-44c7-956e-e8aade98a40f",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "shadowing:a1:1",
+      "xpAwarded": 65,
+      "claimedAt": "2026-04-14T10:48:23.076Z"
+    },
+    {
+      "id": "ef15e2d2-a04c-40d0-9e4f-4380e88a41c2",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "teacher-task:27697482-85f6-47aa-a502-f0742767bc8a",
+      "xpAwarded": 45,
+      "claimedAt": "2026-04-14T10:50:50.779Z"
+    },
+    {
+      "id": "ea37460d-a6cf-4ae7-8423-409f1d4ec84c",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:a1:a1-drag",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-14T12:13:52.407Z"
+    },
+    {
+      "id": "bd0f2585-9ea8-49ff-8e11-33e4ed26a54e",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-14:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-14T12:13:52.407Z"
+    },
+    {
+      "id": "f9cb4f50-f431-45ce-a4bc-38d17c14cc0a",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:a1:a1-listening",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-14T13:22:50.334Z"
+    },
+    {
+      "id": "7cf384fc-fa1d-482d-b132-b90a97966adc",
+      "userId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "kind": "content",
+      "refId": "diagnostic:first",
+      "xpAwarded": 40,
+      "claimedAt": "2026-04-15T07:28:39.030Z"
+    },
+    {
+      "id": "a4e4d801-bc13-4f5c-bfd0-41557e4d28d6",
+      "userId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "kind": "content",
+      "refId": "mini-game:a2:a2-drag",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-15T07:29:07.864Z"
+    },
+    {
+      "id": "da40795b-f749-4a3b-af2d-f8ca2d46ac44",
+      "userId": "645f62d7-0c36-4829-92df-6eeec690c407",
+      "kind": "daily-task",
+      "refId": "2026-04-15:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-15T07:29:07.864Z"
+    },
+    {
+      "id": "b37d51ff-2bc4-4e39-8386-a651e90ac002",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:a2:a2-match",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-19T08:49:34.186Z"
+    },
+    {
+      "id": "997f7a47-7d67-4824-aaa0-ee4211900c48",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "daily-task",
+      "refId": "2026-04-19:arcade-boost",
+      "xpAwarded": 55,
+      "claimedAt": "2026-04-19T08:49:34.187Z"
+    },
+    {
+      "id": "070fd865-578e-4386-8fe9-5b7d35d7a9da",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "mini-game:a2:a2-drag",
+      "xpAwarded": 50,
+      "claimedAt": "2026-04-19T08:49:43.209Z"
+    },
+    {
+      "id": "01aa720e-6e8a-44c4-b800-8d1cf340f8cf",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "content",
+      "refId": "module-test:a1",
+      "xpAwarded": 140,
+      "claimedAt": "2026-04-19T09:04:56.341Z"
+    },
+    {
+      "id": "36a22adb-6f69-42da-b7d7-d2c73eccc9a4",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "kind": "certificate",
+      "refId": "certificate:a1",
+      "xpAwarded": 120,
+      "claimedAt": "2026-04-19T09:04:56.342Z"
+    }
+  ],
+  "certificates": [
+    {
+      "id": "622d9872-b6ba-42d3-a6d3-01408a981f44",
+      "userId": "fbbd37bd-6a74-49a0-9afe-f7a3bb5f6944",
+      "levelId": "a1",
+      "grade": "A+",
+      "issuedAt": "2026-04-09T14:40:44.752Z"
+    },
+    {
+      "id": "9ceb0cb3-6cdc-49fb-8a98-6a6118b9b317",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "b1",
+      "grade": "B",
+      "issuedAt": "2026-04-09T15:34:04.678Z"
+    },
+    {
+      "id": "6a891c81-1bf3-4339-819f-859672a215ec",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a2",
+      "grade": "B",
+      "issuedAt": "2026-04-10T03:01:39.323Z"
+    },
+    {
+      "id": "0c910a47-4623-433b-9343-d6cce4aec060",
+      "userId": "c8d3d69e-1ffc-4ca1-8f14-e96fb6e748ed",
+      "levelId": "a1",
+      "grade": "A+",
+      "issuedAt": "2026-04-19T09:04:56.342Z"
+    }
+  ]
+}

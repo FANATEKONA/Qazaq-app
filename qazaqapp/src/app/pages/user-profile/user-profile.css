@@ -1,161 +1,210 @@
-.profile-layout {
-  display: flex;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: flex-start;
-  padding-bottom: 3rem;
+:host { display: block; }
+.profile-shell { display: grid; gap: 1.4rem; }
+.hero-grid, .main-grid { display: grid; gap: 1rem; }
+.hero-grid { grid-template-columns: 1.2fr 0.8fr 1fr; }
+.main-grid { grid-template-columns: 1fr 1fr; }
+.identity-card, .ring-panel, .role-card, .panel {
+  border-radius: 30px;
+  border: 1px solid rgba(18, 61, 60, 0.08);
+  box-shadow: 0 18px 60px rgba(18, 61, 60, 0.08);
+  background: rgba(255, 251, 243, 0.86);
 }
-
-/* Левая колонка */
-.profile-sidebar {
-  width: 350px;
-  flex-shrink: 0;
-}
-
-.user-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.avatar {
-  font-size: 5rem;
-  background: #f1f9ff;
-  width: 120px;
-  height: 120px;
-  line-height: 120px;
-  border-radius: 50%;
-  margin: 0 auto 1rem auto;
-  border: 4px solid #3498db;
-}
-
-.user-name { margin: 0; color: #2c3e50; font-size: 1.8rem; }
-.user-role { color: #7f8c8d; margin-top: 0.5rem; margin-bottom: 2rem; }
-
-.user-badges {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-.badge-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 12px;
-}
-
-.badge-icon { font-size: 1.5rem; }
-.badge-info { display: flex; flex-direction: column; }
-.badge-value { font-weight: bold; color: #2c3e50; font-size: 1.1rem; }
-.badge-label { color: #95a5a6; font-size: 0.85rem; text-transform: uppercase; }
-
-.full-width { width: 100%; }
-
-/* Правая колонка */
-.profile-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.content-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.card-header h3 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
-  font-size: 1.4rem;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 1rem;
-}
-
-/* Прогресс-бары */
-.stats-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.stat-header {
+.identity-card, .role-card, .panel { padding: 1.5rem; }
+.ring-panel { padding: 1.2rem; display: grid; gap: 0.9rem; }
+.identity-top, .stat-head, .leader-row, .leader-person, .teacher-identity, .task-headline {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #2c3e50;
+  gap: 0.85rem;
+  align-items: center;
 }
-
-.stat-numbers { color: #7f8c8d; }
-
-.progress-bar {
-  height: 10px;
-  background: #ecf0f1;
-  border-radius: 5px;
+.identity-top { justify-content: flex-start; gap: 1rem; }
+.avatar-frame, .leader-avatar, .teacher-avatar {
+  display: grid;
+  place-items: center;
+  background: rgba(18, 61, 60, 0.08);
+}
+.avatar-frame {
+  width: 92px;
+  height: 92px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(18, 61, 60, 0.12), rgba(182, 92, 52, 0.14));
+  font-size: 2.8rem;
+}
+.leader-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.teacher-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  font-size: 1.6rem;
+}
+.eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b65c34;
+}
+h1, h2 { margin: 0; color: #123d3c; }
+.muted, .support-copy, .achievement-card p, .word-card p, .task-card small, .insight-card p, .leader-person small,
+.role-metric small, .identity-metrics span, .teacher-identity small, .teacher-task-card small, .student-card small,
+.quota-card span, .form-field span {
+  color: #5f6764;
+  line-height: 1.6;
+}
+.identity-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-top: 1.4rem; }
+.identity-metrics div, .role-metric, .word-card, .insight-card, .certificate-card, .task-card, .quota-card, .student-card, .teacher-task-card {
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.72);
+}
+.identity-metrics div, .role-metric, .word-card, .insight-card, .certificate-card, .quota-card, .student-card, .teacher-task-card { padding: 1rem; }
+.identity-metrics div,
+.task-meta > div,
+.achievement-card > div,
+.leader-person > div,
+.teacher-identity > div,
+.series-day {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+}
+.identity-metrics strong, .role-metric strong, .word-card strong, .insight-card strong, .achievement-card strong,
+.task-card strong, .leader-score, .teacher-card strong, .teacher-task-card strong, .student-card strong, .quota-card strong { color: #123d3c; }
+.identity-metrics span,
+.identity-metrics strong,
+.task-card strong,
+.task-card small,
+.achievement-card strong,
+.achievement-card small,
+.role-metric span,
+.role-metric small,
+.series-day strong,
+.series-day span {
+  display: block;
+}
+.badge-row, .action-row { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 1.2rem; }
+.action-row { gap: 0.8rem; margin-top: 1.4rem; }
+.badge-pill {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+.badge-pill.teal { background: rgba(20, 91, 76, 0.1); color: #145b4c; }
+.badge-pill.gold { background: rgba(232, 184, 77, 0.18); color: #7f5600; }
+.badge-pill.coral { background: rgba(182, 92, 52, 0.12); color: #b65c34; }
+.badge-pill.ink { background: rgba(18, 61, 60, 0.08); color: #123d3c; }
+.primary-link, .secondary-link, .section-head a { text-decoration: none; font-weight: 700; }
+.primary-link, .secondary-link { padding: 0.9rem 1.1rem; border-radius: 999px; }
+.primary-link { background: #123d3c; color: #fff8f0; }
+.secondary-link, .section-head a { color: #123d3c; }
+.ring-card {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.74);
+}
+.ring { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; }
+.ring-core {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 251, 243, 0.96);
+  color: #123d3c;
+  font-weight: 700;
+}
+.role-grid, .stat-list, .task-stack, .leaderboard-list, .certificate-list, .achievement-grid, .series-grid, .insight-grid,
+.teacher-card, .teacher-student-list, .task-feed, .form-stack { display: grid; gap: 0.85rem; }
+.role-grid { grid-template-columns: repeat(3, 1fr); margin-top: 1rem; }
+.role-metric, .word-card, .form-field { display: grid; gap: 0.35rem; }
+.highlight-list { margin: 1rem 0 0; padding-left: 1.2rem; color: #123d3c; }
+.section-head { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+.stat-row { display: grid; gap: 0.45rem; }
+.progress-line {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(18, 61, 60, 0.08);
   overflow: hidden;
 }
-
-.progress-fill {
-  height: 100%;
-  border-radius: 5px;
-  transition: width 1s ease-in-out;
-}
-
-/* Ачивки */
-.achievements-grid {
+.progress-line span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #123d3c, #1f6662); }
+.task-card {
+  padding: 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  gap: 0.8rem;
+  text-decoration: none;
 }
-
+.task-meta { display: flex; gap: 0.8rem; align-items: flex-start; }
+.task-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(18, 61, 60, 0.08);
+}
+.reward-pill {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.reward-pill { background: rgba(232, 184, 77, 0.18); color: #7f5600; }
+.series-grid { grid-template-columns: repeat(7, 1fr); }
+.series-day {
+  border-radius: 20px;
+  padding: 0.9rem 0.6rem;
+  text-align: center;
+  background: rgba(18, 61, 60, 0.05);
+  color: #5f6764;
+}
+.series-day.active { background: rgba(20, 91, 76, 0.12); color: #145b4c; }
+.word-card span, .certificate-card span, .leader-rank { color: #b65c34; font-weight: 700; }
+.insight-grid { grid-template-columns: repeat(3, 1fr); }
+.insight-card.strong { border: 1px solid rgba(20, 91, 76, 0.12); }
+.insight-card.weak { border: 1px solid rgba(182, 92, 52, 0.14); }
+.leader-row { padding: 0.9rem 0; border-bottom: 1px solid rgba(18, 61, 60, 0.08); }
+.leader-row:last-child { border-bottom: 0; }
+.leader-row.me {
+  margin: 0 -0.5rem;
+  padding: 0.9rem 0.5rem;
+  border-radius: 18px;
+  background: rgba(20, 91, 76, 0.08);
+}
+.leader-rank { min-width: 36px; }
+.certificate-list { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.certificate-card { text-decoration: none; display: grid; gap: 0.35rem; }
+.certificate-card small { color: #7e756e; }
+.achievement-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .achievement-card {
   display: flex;
+  gap: 0.9rem;
   align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
-  border: 2px solid #ecf0f1;
-  border-radius: 12px;
-  background: #fff;
-  transition: 0.3s;
-  position: relative;
+  padding: 1rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
 }
-
-.ach-icon { font-size: 2.5rem; }
-.ach-info h4 { margin: 0 0 0.5rem 0; color: #2c3e50; }
-.ach-info p { margin: 0; color: #7f8c8d; font-size: 0.9rem; line-height: 1.4; }
-.ach-status { position: absolute; top: 1rem; right: 1rem; font-size: 1.2rem; }
-
-/* Состояние заблокированной ачивки */
-.achievement-card.locked {
-  background: #f8f9fa;
-  border-color: #e0e0e0;
-  opacity: 0.7;
-  filter: grayscale(100%);
+.achievement-card.locked { opacity: 0.6; filter: grayscale(1); }
+.achievement-icon { font-size: 2rem; }
+.achievement-card p, .teacher-task-card p { margin: 0.4rem 0; }
+.status-copy { margin-bottom: 1rem; }
+.quota-grid { display: grid; gap: 0.85rem; grid-template-columns: repeat(3, 1fr); }
+.teacher-task-card p { color: #5f6764; line-height: 1.6; }
+.empty-card { text-align: center; }
+@media (max-width: 1180px) {
+  .hero-grid, .main-grid, .insight-grid { grid-template-columns: 1fr; }
 }
-
-.locked-icon { color: #bdc3c7; }
-
-/* Кнопки */
-.btn {
-  padding: 1rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
+@media (max-width: 860px) {
+  .identity-metrics, .role-grid, .series-grid { grid-template-columns: repeat(2, 1fr); }
+  .quota-grid { grid-template-columns: 1fr; }
 }
-.primary { background-color: #3498db; color: white; }
-.primary:hover { background-color: #2980b9; }
