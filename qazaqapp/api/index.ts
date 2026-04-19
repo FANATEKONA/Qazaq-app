@@ -1,5 +1,3 @@
-import { createApiApp } from '../src/backend/api-app';
-
-const app = createApiApp();
+import { app } from '../dist/qazaqapp/server/server.mjs';
 
 export default app;
